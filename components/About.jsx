@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import Image from "next/image"; // Use Next.js Image component
-import image4 from "/public/banner1.jpg";
+import Image from "next/image";
 import image5 from "/public/banner2.jpg";
 
 const AboutUs = () => {
@@ -12,7 +11,7 @@ const AboutUs = () => {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-10 items-center md:px-16">
           <div className="md:w-3/5 mb-8 md:mb-0 ">
             <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 leading-snug mb-5">
-              Welcome to <span className="text-red-600">Hoshiarpur Institute of Automotive & Driving Skills</span>
+              Welcome to <span className="text-red-600">Institute Of Training and Driving Center, Jalandhar</span>
             </h2>
             <p className="text-gray-600">
             Hoshiarpur Institute of Automotive and Skill Driving Society is registered under the Societies Registration Act (XXI of 1960) 

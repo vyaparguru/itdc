@@ -5,8 +5,8 @@ import Footer from "@/components/Footer";
 
 
 export const metadata = {
-  title: "Hoshiarpur Institute Of Automotive and Driving Skills ",
-  description: "Hoshiarpur Institute Of Automotive and Driving Skills",
+  title: "Institute Of Training and Driving Center, Jalandhar ",
+  description: "Institute Of Training and Driving Center, Jalandhar",
 };
 
 export default function RootLayout({ children }) {
