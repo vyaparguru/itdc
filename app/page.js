@@ -6,11 +6,10 @@ import Mission from "@/components/Mission";
 export default function Home() {
   return (
     <>
-
-    <HeroSection/>
-    <Results/>
-    <AboutUs/>
-    <Mission/>
+      <HeroSection />
+      <Results />
+      <AboutUs />
+      <Mission />
     </>
   );
 }
