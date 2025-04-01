@@ -12,6 +12,10 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
+
   return (
     <nav className="bg-white text-gray-800 py-2 shadow-md fixed top-0 left-0 w-full z-40">
       <div className="flex justify-between items-center max-w-6xl mx-auto px-4 md:px-0">
@@ -22,23 +26,23 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center space-x-4 pr-4 md:pr-0">
-        <div className="hidden md:flex space-x-6 pt-3">
-          <Link href="/" className="pb-2">
-            Home
-          </Link>
-          <Link href="/about" className="pb-2">
-            About Us
-          </Link>
-          <Link href="/courses" className="pb-2">
-            Courses
-          </Link>
-          <Link href="/gallery" className="pb-2">
-            Gallery
-          </Link>
-          <Link href="/contact" className="pb-2">
-            Contact Us
-          </Link>
-        </div>
+          <div className="hidden md:flex space-x-6 pt-3">
+            <Link href="/" className="pb-2">
+              Home
+            </Link>
+            <Link href="/about" className="pb-2">
+              About Us
+            </Link>
+            <Link href="/courses" className="pb-2">
+              Courses
+            </Link>
+            <Link href="/gallery" className="pb-2">
+              Gallery
+            </Link>
+            <Link href="/contact" className="pb-2">
+              Contact Us
+            </Link>
+          </div>
           <Link
             href="/courses"
             className="hidden md:inline-block bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-md"
@@ -65,42 +69,45 @@ const Navbar = () => {
         </div>
       </div>
 
+      {/* Backdrop */}
+      {isOpen && (
+        <div
+        className="fixed inset-0 bg-opacity-100 backdrop-blur-sm z-40"
+        onClick={closeMenu} 
+      ></div>
+      )}
+
+      {/* Sidebar Menu */}
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-md transform transition-transform duration-300 ${
+        className={`fixed top-0 left-0 h-full w-68 bg-white shadow-md transform transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } z-50`}
       >
-        {/* <button
-          onClick={toggleMenu}
-          className="absolute top-4 right-4 text-gray-800 focus:outline-none"
-        >
-          ✕
-        </button> */}
-        <div className="flex py-2 px-10">
+        <div className="flex py-2 px-2">
           <Link href="/" className="text-xl font-bold">
             <Image src={logo} alt="logo" width={250} height={10} />
           </Link>
         </div>
         <div className="flex flex-col items-start space-y-4 pb-1 text-gray-800 px-4">
-          <Link href="/" onClick={toggleMenu}>
+          <Link href="/" onClick={closeMenu}>
             Home
           </Link>
-          <Link href="/about" onClick={toggleMenu}>
+          <Link href="/about" onClick={closeMenu}>
             About Us
           </Link>
-          <Link href="/courses" onClick={toggleMenu}>
+          <Link href="/courses" onClick={closeMenu}>
             Courses
           </Link>
-          <Link href="/gallery" onClick={toggleMenu}>
+          <Link href="/gallery" onClick={closeMenu}>
             Gallery
           </Link>
-          <Link href="/contact" onClick={toggleMenu}>
+          <Link href="/contact" onClick={closeMenu}>
             Contact Us
           </Link>
           <Link
-            href="/donate"
+            href="/courses"
             className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded-md w-full text-center"
-            onClick={toggleMenu}
+            onClick={closeMenu}
           >
             Apply Now
           </Link>

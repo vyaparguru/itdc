@@ -21,7 +21,7 @@ const Footer = () => {
             Hoshiarpur Institute of Automotive and Skill Driving Society is registered under the Societies Registration Act (XXI of 1960) and as amended by Punjab Government Act.1957.
             </p>
           </div>
-          <nav className="mb-8 md:mb-0 w-full md:w-1/3 flex flex-col md:items-center">
+          <nav className="mb-0 md:mb-0 w-full md:w-1/3 flex flex-col md:items-center">
             <ul className="flex flex-col space-y-2 text-md">
               <li>
                 <Link href="/" className="hover:underline">
@@ -51,7 +51,7 @@ const Footer = () => {
             </ul>
           </nav>
           <div className="w-full md:w-1/2 text-start">
-            <div className="flex flex-col gap-1 space-y-4 mt-10 md:mt-0 mb-8">
+            <div className="flex flex-col gap-1 space-y-4 mt-6 md:mt-0 md:mb-8">
               <div className="flex items-center">
                 <FaMapMarkerAlt className="text-red-500 mr-2" />
                 <span>Red Cross Building, Bazar Vakilan, Hoshiarpur, Punjab</span>
@@ -64,21 +64,25 @@ const Footer = () => {
                 <FaEnvelope className="text-red-500 mr-2" />
                 <span>hiadshoshiarpur@gmail.com </span>
               </div>
-              <div className="flex gap-6">
+              <div className="flex gap-4 md:gap-6">
+                <div>
               <Link
                 href="/courses"
-                className="bg-red-500 hover:bg-red-700 text-white px-4 mt-10 md:mt-0 py-2 rounded-md w-40 text-center"
+                className="bg-red-500 hover:bg-red-700 text-white px-4 mt-12 md:mt-0 py-2 rounded-md w-40 text-center"
               >
                 Apply Now
               </Link>
+              </div>
+              <div>
               <Link
                   href="https://www.facebook.com/people/Hoshiarpur-Institute-of-Automotive-and-Driving-Skills/100091049582544/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-red-500 hover:text-red-700 text-2xl"
+                  className="text-red-500 hover:text-red-700 text-2xl "
                 >
                   <FaFacebook size={30}/>
                 </Link>
+                </div>
                 </div>
             </div>
           </div>
