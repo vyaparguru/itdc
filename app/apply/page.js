@@ -1,5 +1,6 @@
 'use client';
 
+import FormField from '@/components/reusable/FormField';
 import React, { useState } from 'react';
 
 const stateCityData = {
@@ -125,58 +126,41 @@ const Apply = () => {
         <form className="order-2 md:order-1 grid grid-cols-1 gap-6 text-black">
           {/* Row 1: Name & Father's Name */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block font-medium text-gray-700 mb-1">Name</label>
-              <input type="text" placeholder="Enter your name" className="input w-full" />
-            </div>
-            <div>
-              <label className="block font-medium text-gray-700 mb-1">Father's Name</label>
-              <input type="text" placeholder="Enter your father’s name" className="input w-full" />
-            </div>
+            <FormField label="Name" placeholder="Enter your name" />
+            <FormField label="Father's Name" placeholder="Enter your father’s name" />
           </div>
 
           {/* Row 2: DOB & Mobile Number */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block font-medium text-gray-700 mb-1">Date of Birth</label>
-              <input type="date" className="input w-full" />
-            </div>
-            <div>
-              <label className="block font-medium text-gray-700 mb-1">Mobile Number</label>
-              <input type="text" placeholder="Enter your mobile number" className="input w-full" />
-            </div>
+            <FormField label="Date of Birth" type="date" />
+            <FormField label="Mobile Number" placeholder="Enter your mobile number" />
           </div>
 
           {/* Row 3: Email & Qualification */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block font-medium text-gray-700 mb-1">Email</label>
-              <input type="email" placeholder="Enter your email" className="input w-full" />
-            </div>
-            <div>
-              <label className="block font-medium text-gray-700 mb-1">Qualification</label>
-              <select className="input select w-full h-10">
-                <option>5th Standard</option>
-                <option>8th Standard</option>
-                <option>10th Standard</option>
-                <option>12th Standard</option>
-                <option>Graduate</option>
-                <option>Others</option>
-              </select>
-            </div>
+            <FormField label="Email" type="email" placeholder="Enter your email" />
+            <FormField
+              label="Qualification"
+              type="select"
+              options={[
+                "5th Standard",
+                "8th Standard",
+                "10th Standard",
+                "12th Standard",
+                "Graduate",
+                "Others",
+              ]}
+            />
           </div>
 
           {/* Row 4: Passport Photo */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block font-medium text-gray-700 mb-1">Passport Size Photo</label>
-              <input
-                type="file"
-                className="input w-full"
-                accept="image/*"
-                onChange={handlePhotoUpload}
-              />
-            </div>
+            <FormField
+              label="Passport Size Photo"
+              type="file"
+              accept="image/*"
+              onChange={handlePhotoUpload}
+            />
           </div>
         </form>
       </div>
@@ -186,60 +170,48 @@ const Apply = () => {
         {/* Row 1: Address & State */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block font-medium text-gray-700 mb-1">Address</label>
-            <input type="text" placeholder="Enter your address" className="input w-full" />
+            <FormField label="Address" placeholder="Enter your address" />
           </div>
-          <div>
-            <label className="block font-medium text-gray-700 mb-1">State</label>
-            <select
-              className="input select w-full h-10"
-              value={selectedState}
-              onChange={handleStateChange}
-            >
-              <option value="">Select State</option>
-              {Object.keys(stateCityData).map((state) => (
-                <option key={state} value={state}>
-                  {state}
-                </option>
-              ))}
-            </select>
-          </div>
+          <FormField
+            label="State"
+            type="select"
+            value={selectedState}
+            onChange={handleStateChange}
+            options={Object.keys(stateCityData)}
+          />
         </div>
 
         {/* Row 2: City, Pincode & District */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div>
-            <label className="block font-medium text-gray-700 mb-1">City</label>
-            <select className="input select w-full h-10">
-              <option value="">Select City</option>
-              {cities.map((city) => (
-                <option key={city} value={city}>
-                  {city}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label className="block font-medium text-gray-700 mb-1">Pincode</label>
-            <input type="text" placeholder="Enter your pincode" className="input w-full" />
-          </div>
-          <div>
-            <label className="block font-medium text-gray-700 mb-1">District</label>
-            <input type="text" placeholder="Enter your district" className="input w-full" />
-          </div>
+          <FormField
+            label="City"
+            type="select"
+            options={cities}
+            placeholder="Select City"
+          />
+          <FormField
+            label="Pincode"
+            type="text"
+            placeholder="Enter your pincode"
+          />
+          <FormField
+            label="District"
+            type="text"
+            placeholder="Enter your district"
+          />
         </div>
 
         {/* Row 3: Aadhaar Card Details */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <FormField
+            label="Aadhaar Card Number"
+            type="text"
+            placeholder="Enter your Aadhaar number"
+          />
           <div>
-            <label className="block font-medium text-gray-700 mb-1">Aadhaar Card Number</label>
-            <input type="text" placeholder="Enter your Aadhaar number" className="input w-full" />
-          </div>
-          <div>
-            <label className="block font-medium text-gray-700 mb-1">Aadhaar Front Side</label>
-            <input
+            <FormField
+              label="Aadhaar Front Side"
               type="file"
-              className="input w-full"
               accept="image/*"
               onChange={handleAadhaarFrontUpload}
             />
@@ -254,10 +226,9 @@ const Apply = () => {
             </div>
           </div>
           <div>
-            <label className="block font-medium text-gray-700 mb-1">Aadhaar Back Side</label>
-            <input
+            <FormField
+              label="Aadhaar Back Side"
               type="file"
-              className="input w-full"
               accept="image/*"
               onChange={handleAadhaarBackUpload}
             />
@@ -276,50 +247,43 @@ const Apply = () => {
       <div className="mt-12 grid grid-cols-1 gap-6 text-black">
         {/* Row 1: Driving License Number & License Category */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block font-medium text-gray-700 mb-1">Driving License Number</label>
-            <input type="text" placeholder="Enter your license number" className="input w-full" />
-          </div>
-          <div>
-            <label className="block font-medium text-gray-700 mb-1">License Category</label>
-            <select className="input select w-full h-10">
-              <option>LMV</option>
-              <option>HMV</option>
-              <option>LTV</option>
-              <option>HTV</option>
-            </select>
-          </div>
+          <FormField
+            label="Driving License Number"
+            type="text"
+            placeholder="Enter your license number"
+          />
+          <FormField
+            label="License Category"
+            type="select"
+            options={["LMV", "HMV", "LTV", "HTV"]}
+          />
         </div>
 
         {/* Row 2: License Issue Date & Expiry Date */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block font-medium text-gray-700 mb-1">License Issue Date</label>
-            <input type="date" className="input w-full" />
-          </div>
-          <div>
-            <label className="block font-medium text-gray-700 mb-1">License Expiry Date</label>
-            <input type="date" className="input w-full" />
-          </div>
+          <FormField
+            label="License Issue Date"
+            type="date"
+          />
+          <FormField
+            label="License Expiry Date"
+            type="date"
+          />
         </div>
         {/* Row 3: Issuing Authority */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block font-medium text-gray-700 mb-1">Issuing Authority</label>
-            <select className="input select w-full h-10">
-              <option>RTO</option>
-              <option>DTO</option>
-              <option>SDM</option>
-            </select>
-          </div>
+          <FormField
+            label="Issuing Authority"
+            type="select"
+            options={["RTO", "DTO", "SDM"]}
+          />
         </div>
         {/* Row 4: License Front & Back Pictures */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block font-medium text-gray-700 mb-1">Front picture of Driving License</label>
-            <input
+            <FormField
+              label="Front picture of Driving License"
               type="file"
-              className="input w-full"
               accept="image/*"
               onChange={handleLicenseFrontUpload}
             />
@@ -334,10 +298,9 @@ const Apply = () => {
             </div>
           </div>
           <div>
-            <label className="block font-medium text-gray-700 mb-1">Back picture of Driving License</label>
-            <input
+            <FormField
+              label="Back picture of Driving License"
               type="file"
-              className="input w-full"
               accept="image/*"
               onChange={handleLicenseBackUpload}
             />
@@ -355,19 +318,17 @@ const Apply = () => {
 
         {/* Row 5: Date & Place */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block font-medium text-gray-700 mb-1">Date</label>
-            <input
-              type="date"
-              className="input w-full"
-              value={new Date().toISOString().split('T')[0]} // Default to today's date
-              readOnly
-            />
-          </div>
-          <div>
-            <label className="block font-medium text-gray-700 mb-1">Place</label>
-            <input type="text" placeholder="Enter your place" className="input w-full" />
-          </div>
+          <FormField
+            label="Date"
+            type="date"
+            value={new Date().toISOString().split('T')[0]}
+            readOnly
+          />
+          <FormField
+            label="Place"
+            type="text"
+            placeholder="Enter your place"
+          />
         </div>
         <div className="mt-8 text-center">
           <button className="bg-[#800000] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#a00000]">
