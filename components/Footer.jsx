@@ -18,7 +18,7 @@ const Footer = () => {
               </Link>
             </div>
             <p className="text-md mt-2">
-              Hoshiarpur Institute of Automotive and Skill Driving Society is registered under the Societies Registration Act (XXI of 1960) and as amended by Punjab Government Act.1957.
+            Jalandhar Institute of Driving and Training Centre is a government-approved driver training institution dedicated to providing high-quality driving education and skill development. 
             </p>
           </div>
           <nav className="mb-0 md:mb-0 w-full md:w-1/3 flex flex-col md:items-center">
