@@ -15,8 +15,7 @@ const ContactPage = () => {
           <FaMapMarkerAlt className="text-2xl text-[#800000] mb-3" />
           <h2 className="text-lg font-semibold text-gray-700">Address</h2>
           <p className="text-gray-600 text-start">
-            Jalandhar Institute of Driving and Training Centre, Dharam Complex,
-            G.T. Road, Kartarpur, Dist. Jalandhar, 144801
+            Jalandhar Institute of Drivers Training, Dharam Complex, G.T. Road, Kartarpur, Jalandhar, 144801
           </p>
         </div>
 
@@ -33,7 +32,7 @@ const ContactPage = () => {
         <div className="flex flex-col items-start bg-gray-100 p-6 rounded-lg shadow-lg">
           <FaEnvelope className="text-2xl text-[#800000] mb-3" />
           <h2 className="text-lg font-semibold text-gray-700">Email</h2>
-          <p className="text-gray-600">hiadshoshiarpur@gmail.com</p>
+          <p className="text-gray-600">jaldrivingcenter@gmail.com</p>
         </div>
       </div>
 

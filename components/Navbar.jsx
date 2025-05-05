@@ -3,12 +3,12 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation"; // Import usePathname
-import logo from "/public/logo.png";
+import { usePathname } from "next/navigation"; 
+import logo from "/public/logo.jpg";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname(); // Get the current path
+  const pathname = usePathname(); 
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -18,14 +18,14 @@ const Navbar = () => {
     setIsOpen(false);
   };
 
-  const isActive = (path) => pathname === path ? "border-b-2 border-[#800000]" : ""; // Active link class
+  const isActive = (path) => pathname === path ? "border-b-2 border-[#800000]" : ""; 
 
   return (
-    <nav className="bg-white text-gray-800 py-2 shadow-md fixed top-0 left-0 w-full z-40">
+    <nav className="bg-white text-gray-800 py-4 shadow-md fixed top-0 left-0 w-full z-40">
       <div className="flex justify-between items-center max-w-6xl mx-auto px-4 md:px-0">
         <div className="flex items-center">
           <Link href="/" className="text-xl font-bold">
-            <Image src={logo} alt="logo" width={250} height={10} />
+            <Image src={logo} alt="logo" width={360} height={10} />
           </Link>
         </div>
 

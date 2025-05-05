@@ -10,16 +10,16 @@ export default function AboutUs() {
 
       {/* Paragraph (2nd line) */}
       <p className="text-gray-700 text-left mt-4 max-w-full mx-auto">
-        With the sincere efforts, far-sighted vision and progressive mission of Sh Bhagwant Mann – the worthy Chief Minister of Punjab; “HOSHIAPUR INSTITUTE OF AUTOMOTIVE & DRIVING SKILLS, HOSHIARPUR”, A joint venture of Punjab Government and Red Cross Hoshiarpur has been established by “Hoshiarpur Automotive & Driving Skills Society” with the aims to upgrade the skills of the youth, start various courses in driving, automotive and other related fields.
+      Jalandhar Institute of Driving and Training Centre is a government-approved driver training institution dedicated to providing high-quality driving education and skill development. Located in Kartarpur Distt. Jalandhar, we specialize in professional driver training for all types of heavy vehicles. Our expert instructors, modern training methods, and emphasis on road safety ensure that learners gain the confidence and competence needed for responsible driving. Whether you are a beginner or seeking advanced training, we are committed to shaping skilled and law-abiding drivers.
       </p>
 
       {/* Image on Left, Text on Right (3rd line) */}
       <div className="flex flex-col md:flex-row items-center md:items-start gap-8 mt-8">
         {/* Left Image with Caption */}
-        <div className="md:w-1/3 flex flex-col items-center">
+        {/* <div className="md:w-1/3 flex flex-col items-center">
           <div className="shadow-lg rounded-lg overflow-hidden">
             <Image
-              src="/about/dc-komal.jpg" // Replace with actual image path
+              src="/about/dc-komal.jpg" 
               alt="Leader Image"
               width={400}
               height={300}
@@ -29,20 +29,20 @@ export default function AboutUs() {
           <p className="text-sm text-center text-gray-600 mt-2">
             Mrs. Komal Mittal, IAS <br /> Deputy Commissioner, Hoshiarpur
           </p>
-        </div>
+        </div> */}
 
         {/* Right Paragraph */}
-        <div className="md:w-2/3 text-gray-700 leading-relaxed">
+        {/* <div className="md:w-2/3 text-gray-700 leading-relaxed">
           <p>
             District Red Cross Society Hoshiarpur under the visionary leadership of Mrs Komal Mittal IAS is doing yeoman's service for the needy and the downtrodden. Red Cross is already working on many social welfare projects like free dialysis facility for the needy, fee to poor students, social security to helpless old age people, financial help to meritorious students pursuing professional education, help to poor and needy patients, deformity corrective surgery of poor kids, wheelchairs, tricycles, and other aids to physically challenged. Red Cross is also working for the empowerment of needy women through various vocational and income-generating courses, running a physiotherapy center, creche, homeopathic dispensaries, and a prestigious Sanjhi Rasoi to feed the needy in this city beautiful Hoshiarpur.
           </p>
-        </div>
+        </div> */}
       </div>
 
       {/* Another Paragraph (4th line) */}
-      <p className="text-gray-700 text-left mt-8 max-w-full mx-auto">
+      {/* <p className="text-gray-700 text-left mt-8 max-w-full mx-auto">
         Red Cross has taken a new leap into another area of road safety. Hoshiarpur Institute of Automotive and Skill driving Society was registered under Societies Registration Act (XXI of 1960) and as amended by Punjab Government Act.1957. Institute of Automotive and Driving Skills Hoshiarpur is going to be a milestone for the candidates of Majha and Doaba region especially. This facility is going to be only second in state of Punjab.
-      </p>
+      </p> */}
 
       {/* Image Grid (5th line) */}
       <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-3 gap-8 md:gap-12 mt-10">

@@ -14,7 +14,7 @@ const Footer = () => {
           <div className="mb-8 md:mb-9 w-full md:w-1/2">
             <div>
               <Link href="/" className="text-xl font-bold">
-                <Image src={logo} alt="logo" width={250} height={10} />
+                <Image src={logo} alt="logo" width={360} height={16} />
               </Link>
             </div>
             <p className="text-md mt-2">
@@ -63,7 +63,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center">
                 <FaEnvelope className="text-[#800000] mr-2" />
-                <span>hiadshoshiarpur@gmail.com </span>
+                <span>jaldrivingcenter@gmail.com </span>
               </div>
               <div className="flex gap-4 md:gap-6">
                 <div>
@@ -90,7 +90,7 @@ const Footer = () => {
         </div>
         <div className="flex flex-col md:flex-row justify-between items-center mt-10 border-t border-gray-700 pt-4">
           <p className="text-center md:text-left text-sm mb-4 md:mb-0">
-            &copy; {new Date().getFullYear()} <span className="text-[#800000]">HIADS.</span> All rights reserved | Website Developed by{" "}
+            &copy; {new Date().getFullYear()} <span className="text-[#800000]">ITDC.</span> All rights reserved | Website Developed by{" "}
             <Link
               href="https://vyaparguru.com"
               className="text-black"

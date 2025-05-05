@@ -1,26 +1,15 @@
-import React from 'react';
-
-const FileUpload = ({ label, onChange, preview }) => {
+export default function FileUpload({ label, name, onChange, preview }) {
   return (
-    <div>
-      <label className="block text-md font-medium text-gray-700">{label}</label>
+    <div className="flex flex-col mb-4">
+      <label className="font-semibold mb-1">{label}</label>
       <input
         type="file"
+        name={name}
         accept="image/*"
         onChange={onChange}
-        className="mt-1 block w-full text-sm text-gray-500 "
+        className="border border-gray-300 rounded p-2"
       />
-      <div className="mt-2 w-60 md:w-92 h-44 md:h-48 border-2 border-dashed border-gray-300 rounded-lg overflow-hidden">
-        {preview ? (
-          <img src={preview} alt={label} className="w-full h-full object-cover" />
-        ) : (
-          <span className="text-gray-500 text-sm flex items-center justify-center h-full">
-            Preview
-          </span>
-        )}
-      </div>
+      {preview && <img src={preview} alt="preview" className="w-32 h-32 object-cover mt-2" />}
     </div>
-  );
-};
-
-export default FileUpload;
+  )
+}
