@@ -45,7 +45,7 @@ export default function RegistrationForm() {
       >
         <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 leading-snug mb-5"><span className='text-[#800000]'>Registration</span> <span>Form</span></h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-40">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-gray-black font-semibold">Name</label>
             <input name="name" className="border border-gray-600 p-2 w-full" />

@@ -87,7 +87,7 @@ const RefresherCourse = () => {
         </div>
   
         {/* Apply Button */}
-        <Link href="/apply" className="flex justify-center text-center mt-6">
+        <Link href="/register" className="flex justify-center text-center mt-6">
           <button className="bg-[#800000] text-white px-6 py-2 rounded-lg hover:bg-red-700 transition">
             Apply Now
           </button>
