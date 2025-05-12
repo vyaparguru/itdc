@@ -79,7 +79,7 @@ const RefresherCourse = () => {
             >
               jaldrivingcenter@gmail.com
             </a>
-            . You can also hand over the applications in-person at Dharam Complex, G.T. Road, Kartarpur, Jalandhar, 144801 from 9 A.M to 5 P.M
+            . You can also hand over the applications in-person at Dharam Complex, G.T. Road, Kartarpur, Jalandhar, 144801 from 9 A.M to 5  P.M
             Fees for Tatkal cases is Rs 2000/- which is collected in CASH at the
             time of class. Please mention your phone number and attach a copy of
             Aadhaar card and Driving License in your Tatkal application.

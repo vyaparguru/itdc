@@ -18,7 +18,7 @@ const Footer = () => {
               </Link>
             </div>
             <p className="text-md mt-2">
-            Jalandhar Institute of Driving and Training Centre is a government-approved driver training institution dedicated to providing high-quality driving education and skill development. 
+            Jalandhar Institute of Drivers Training is a government-approved driver training institution dedicated to providing high-quality driving education and skill development. 
             </p>
           </div>
           <nav className="mb-0 md:mb-0 w-full md:w-1/3 flex flex-col md:items-center">
@@ -59,7 +59,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center">
                 <FaPhoneAlt className="text-[#800000] mr-2" />
-                <span>9056500975, 9056500976, 9056500977  </span>
+                <span>+91 6239519485  </span>
               </div>
               <div className="flex items-center">
                 <FaEnvelope className="text-[#800000] mr-2" />
@@ -68,8 +68,8 @@ const Footer = () => {
               <div className="flex gap-4 md:gap-6">
                 <div>
                   <Link
-                    href="/apply"
-                    className="bg-[#800000] hover:bg-red-700 text-white px-4 mt-12 md:mt-0 py-2 rounded-md w-40 text-center"
+                    href="/register"
+                    className="bg-[#800000] text-white px-4 mt-12 md:mt-0 py-2 rounded-md w-40 text-center"
                   >
                     Apply Now
                   </Link>
@@ -79,7 +79,7 @@ const Footer = () => {
                     href="https://www.facebook.com/people/Hoshiarpur-Institute-of-Automotive-and-Driving-Skills/100091049582544/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[#800000] hover:text-red-700 text-2xl "
+                    className="text-[#800000] text-2xl "
                   >
                     <FaFacebook size={30} />
                   </Link>

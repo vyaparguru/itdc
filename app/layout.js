@@ -5,8 +5,8 @@ import Footer from "@/components/Footer";
 
 
 export const metadata = {
-  title: "Institute Of Training and Driving Center, Jalandhar ",
-  description: "Institute Of Training and Driving Center, Jalandhar",
+  title: "Jalandhar Institute of Drivers Traning ",
+  description: "Jalandhar Institute of Drivers Traning",
 };
 
 export default function RootLayout({ children }) {

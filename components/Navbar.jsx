@@ -48,7 +48,7 @@ const Navbar = () => {
             </Link>
           </div>
           <Link
-            href="/apply"
+            href="/register"
             className="hidden md:inline-block bg-[#800000] text-white px-4 py-2 rounded-md"
           >
             Apply Now
@@ -109,7 +109,7 @@ const Navbar = () => {
             Contact Us
           </Link>
           <Link
-            href="/apply"
+            href="/register"
             className="bg-[#800000] text-white px-4 py-2 rounded-md w-full text-center"
             onClick={closeMenu}
           >

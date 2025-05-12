@@ -23,9 +23,7 @@ const ContactPage = () => {
         <div className="flex flex-col items-start bg-gray-100 p-6 rounded-lg shadow-lg">
           <FaPhoneAlt className="text-2xl text-[#800000] mb-3" />
           <h2 className="text-lg font-semibold text-gray-700">Phone</h2>
-          <p className="text-gray-600">9056500975</p>
-          <p className="text-gray-600">9056500976</p>
-          <p className="text-gray-600">9056500977</p>
+          <p className="text-gray-600">+91 6239519485</p>
         </div>
 
         {/* Email Box */}
