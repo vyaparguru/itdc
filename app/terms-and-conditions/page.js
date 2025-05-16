@@ -60,10 +60,10 @@ const TermsAndConditions = () => {
           For any clarifications, contact us at:
         </p>
         <p className="text-gray-700">
-          📍 Jalandhar Institute of Driving and Training Centre, Dharam Complex, G.T. Road, Kartarpur, Dist. Jalandhar - 144801 (Punjab)
+          📍 Jalandhar Institute of Drivers Training, Dharam Complex, G.T. Road, Kartarpur, Jalandhar, 144801 (Punjab)
         </p>
-        <p className="text-gray-700">📞 9056500975, 9056500976, 9056500977</p>
-        <p className="text-gray-700">📧 hiadshoshiarpur@gmail.com</p>
+        <p className="text-gray-700">📞 +91 90560-66373,+91 90560-66473</p>
+        <p className="text-gray-700">📧 jaldrivingcenter@gmail.com</p>
       </div>
     </div>
   );

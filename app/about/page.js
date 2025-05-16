@@ -45,7 +45,7 @@ export default function AboutUs() {
       </p> */}
 
       {/* Image Grid (5th line) */}
-      <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-3 gap-8 md:gap-12 mt-10">
+      {/* <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-3 gap-8 md:gap-12 mt-10">
         {["/about/a1.jpg", "/about/a2.jpg", "/about/a3.jpg", "/about/a4.jpg", "/about/a5.jpg", "/about/a6.jpg", "/about/a7.jpg"].map((src, index) => (
           <div key={index} className="shadow-lg rounded-lg overflow-hidden">
             <Image
@@ -57,7 +57,7 @@ export default function AboutUs() {
             />
           </div>
         ))}
-      </div>
+      </div> */}
     </section>
   );
 }

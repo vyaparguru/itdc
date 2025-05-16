@@ -40,9 +40,9 @@ const Navbar = () => {
             <Link href="/courses" className={`pb-2 ${isActive("/courses")}`}>
               Courses
             </Link>
-            <Link href="/gallery" className={`pb-2 ${isActive("/gallery")}`}>
+            {/* <Link href="/gallery" className={`pb-2 ${isActive("/gallery")}`}>
               Gallery
-            </Link>
+            </Link> */}
             <Link href="/contact" className={`pb-2 ${isActive("/contact")}`}>
               Contact Us
             </Link>
@@ -102,9 +102,9 @@ const Navbar = () => {
           <Link href="/courses" className={isActive("/courses")} onClick={closeMenu}>
             Courses
           </Link>
-          <Link href="/gallery" className={isActive("/gallery")} onClick={closeMenu}>
+          {/* <Link href="/gallery" className={isActive("/gallery")} onClick={closeMenu}>
             Gallery
-          </Link>
+          </Link> */}
           <Link href="/contact" className={isActive("/contact")} onClick={closeMenu}>
             Contact Us
           </Link>

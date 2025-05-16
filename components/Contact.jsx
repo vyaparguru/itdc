@@ -23,7 +23,10 @@ const ContactPage = () => {
         <div className="flex flex-col items-start bg-gray-100 p-6 rounded-lg shadow-lg">
           <FaPhoneAlt className="text-2xl text-[#800000] mb-3" />
           <h2 className="text-lg font-semibold text-gray-700">Phone</h2>
-          <p className="text-gray-600">+91 6239519485</p>
+          <p className="text-gray-600">+91 90560-66373 
+          <br />
+          +91 90560-66473
+</p>
         </div>
 
         {/* Email Box */}
@@ -35,7 +38,7 @@ const ContactPage = () => {
       </div>
 
       {/* Google Map */}
-      <div className="mt-12">
+      {/* <div className="mt-12">
         <div className="w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
           <iframe
             className="w-full h-full"
@@ -44,7 +47,7 @@ const ContactPage = () => {
             referrerPolicy="no-referrer-when-downgrade"
           ></iframe>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 };
