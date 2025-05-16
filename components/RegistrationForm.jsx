@@ -111,9 +111,9 @@ export default function RegistrationForm() {
         <button type="submit" className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded w-full">
           Submit
         </button>
-        <p className="text-center text-gray-700 mt-2">
+        {/* <p className="text-center text-gray-700 mt-2">
           Upon successful registration, you will be redirected to the online payment screen to pay ₹430.
-        </p>
+        </p> */}
       </div>
     </form>
   )

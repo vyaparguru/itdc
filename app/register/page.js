@@ -249,6 +249,9 @@ export default function RegistrationForm() {
         >
           Submit
         </button>
+        <p className="text-center text-gray-700 mt-2">
+          Upon successful registration, you will be redirected to the online payment screen to pay ₹430.
+        </p>
         {status && <p className="mt-4 text-sm text-gray-700">{status}</p>}
       </form>
     </div>
