@@ -33,7 +33,7 @@ const ContactPage = () => {
         <div className="flex flex-col items-start bg-gray-100 p-6 rounded-lg shadow-lg">
           <FaEnvelope className="text-2xl text-[#800000] mb-3" />
           <h2 className="text-lg font-semibold text-gray-700">Email</h2>
-          <p className="text-gray-600">jaldrivingcenter@gmail.com</p>
+          <p className="text-gray-600">info@itdcpunjab.com</p>
         </div>
       </div>
 
