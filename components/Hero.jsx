@@ -43,7 +43,6 @@ const HeroSection = () => {
               animate={{ opacity: currentSlide === index ? 1 : 0 }}
               exit={{ opacity: 0 }}
             >
-
             </motion.div>
           ))}
         </AnimatePresence>
