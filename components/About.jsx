@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import image5 from "/public/banner2.jpg";
+import image5 from "/public/banner3.jpg";
 
 const AboutUs = () => {
   return (

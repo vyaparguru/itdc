@@ -9,9 +9,10 @@ import { useRouter } from "next/navigation";
 // import image3 from "/banner3.jpg";
 
 const slides = [
-  { id: 1, image: "/banner1.jpg", title: "Support Our Cause", description: "Join us in making a difference." },
-  { id: 2, image: "/banner2.jpg", title: "Support Our Cause", description: "Join us in making a difference." },
-  { id: 3, image: "/banner3.jpg", title: "Support Our Cause", description: "Join us in making a difference." },
+  { id: 1, image: "/banner4.jpg" },
+  { id: 2, image: "/banner1.jpg" },
+  { id: 3, image: "/banner3.jpg" },
+  // { id: 3, image: "/banner3.jpg" },
 ];
 
 const HeroSection = () => {

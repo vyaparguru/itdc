@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const RefresherCourse = () => {
     return (
-      <div className="max-w-full mx-auto px-6 md:px-12 lg:px-48 py-16 mt-16 md:mt-20 bg-white">
+      <div className="max-w-full mx-auto px-6 md:px-12 lg:px-48 py-16 md:py-20 mt-16 md:mt-20 bg-white">
         {/* Heading */}
         <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 leading-snug mb-5">
               Refresher Course <span className="text-[#800000]">For HMV Drivers</span>
@@ -14,7 +14,7 @@ const RefresherCourse = () => {
         <img
           src="/courses.jpg"
           alt="Course Image"
-          className="w-full h-64 object-cover mt-4 rounded-lg"
+          className="w-full h-80 object-cover mt-4 rounded-lg"
         />
   
         {/* Course Description */}

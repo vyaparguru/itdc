@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function AboutUs() {
   return (
-    <section className="max-w-full mx-auto px-6 md:px-12 lg:px-48 py-16 mt-16 md:mt-20 bg-white">
+    <section className="max-w-full mx-auto px-6 md:px-12 lg:px-48 py-16 md:py-40 mt-16 md:mt-20 bg-white">
       {/* Heading */}
       <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 leading-snug mb-5">
          About <span className="text-[#800000]">Us</span>
