@@ -7,34 +7,34 @@ const Results = () => {
   return (
     <div className="bg-white py-5">
       <div className="max-w-6xl mx-auto text-center">
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-20 ">
+        <div className="grid grid-cols-2 sm:grid-cols-2 font-medium md:grid-cols-4 gap-8 md:gap-20 ">
           <div>
-            <span className="text-4xl md:text-5xl font-extrabold text-gray-800">
+            {/* <span className="text-4xl md:text-5xl font-extrabold text-gray-800">
               <CountUp end={3} duration={2} />
-              <span className="text-[#800000]">+</span>
-            </span>
-            <p className="text-gray-600">Trained Instructors</p>
+              <span className="text-[#800000]">Trained & Qualified</span>
+            </span> */}
+            <p className="text-lg text-gray-600">Trained & Qualified Instructors</p>
           </div>
           <div>
-            <span className="text-4xl md:text-5xl font-extrabold text-gray-800">
+            {/* <span className="text-4xl md:text-5xl font-extrabold text-gray-800">
               <CountUp end={24} duration={2} />
               <span className="text-[#800000]">/7</span>
-            </span>
-            <p className="text-gray-600">Support for students </p>
+            </span> */}
+            <p className="text-lg text-gray-600">24/7 Support Available for Students </p>
           </div>
           <div>
-            <span className="text-4xl md:text-5xl font-extrabold text-gray-800">
+            {/* <span className="text-4xl md:text-5xl font-extrabold text-gray-800">
               <CountUp end={100} duration={2} />
               <span className="text-[#800000]">%</span>
-            </span>
-            <p className="text-gray-600">Certified</p>
+            </span> */}
+            <p className="text-lg text-gray-600">Government Approved</p>
           </div>
           <div>
-            <span className="text-4xl md:text-5xl font-extrabold text-gray-800">
+            {/* <span className="text-4xl md:text-5xl font-extrabold text-gray-800">
               <CountUp end={200} duration={2} />
               <span className="text-[#800000]">+</span>
-            </span>
-            <p className="text-gray-600">Daily Learners</p>
+            </span> */}
+            <p className="text-lg text-gray-600">Traning Drivers for a Better Future</p>
           </div>
         </div>
       </div>

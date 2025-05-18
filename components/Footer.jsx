@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { FaEnvelope, FaFacebook, FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
+import { FaEnvelope, FaFacebook, FaInstagram, FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
 import logo from "/public/logo.png";
 
 const Footer = () => {
@@ -76,12 +76,23 @@ const Footer = () => {
                 </div>
                 <div>
                   <Link
-                    href="https://www.facebook.com/people/Hoshiarpur-Institute-of-Automotive-and-Driving-Skills/100091049582544/"
-                    target="_blank"
+                    // href="https://www.facebook.com/people/Hoshiarpur-Institute-of-Automotive-and-Driving-Skills/100091049582544/"
+                    href="/"
+                    // target="_blank"
                     rel="noopener noreferrer"
                     className="text-[#800000] text-2xl "
                   >
                     <FaFacebook size={30} />
+                  </Link>
+                </div>
+                 <div>
+                  <Link
+                    href="/"
+                    // target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#800000] text-2xl "
+                  >
+                    <FaInstagram size={30} />
                   </Link>
                 </div>
               </div>

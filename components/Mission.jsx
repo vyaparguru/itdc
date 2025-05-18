@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import image6 from "/public/banner1.jpg";
+import image6 from "/public/mission.jpg";
 
 const Mission = () => {
     const router = useRouter();

@@ -32,7 +32,7 @@ const HeroSection = () => {
 
   return (
     <>
-      <div className="relative flex items-center justify-center h-[calc(70vh)] sm:h-[70vh] md:h-[65vh] lg:h-[70vh] xl:h-[85vh]">
+      <div className="relative flex items-center justify-center h-[calc(70vh)] sm:h-[70vh] md:h-[65vh] lg:h-[70vh] xl:h-[88vh]">
         <AnimatePresence>
           {slides.map((slide, index) => (
             <motion.div
