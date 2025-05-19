@@ -58,8 +58,8 @@ const RefresherCourse = () => {
         <h2 className="text-xl font-semibold text-gray-800 mt-6">Duration:</h2>
         <ul className="list-disc list-inside text-gray-700 mt-2">
           <li>2 Days</li>
-          <li>10 am to 4 pm Monday to Saturday</li>
-          <li>Food and tea etc. will be available on payment basis</li>
+          {/* <li>10 am to 4 pm Monday to Saturday</li>
+          <li>Food and tea etc. will be available on payment basis</li> */}
         </ul>
   
         {/* Course Fee */}
