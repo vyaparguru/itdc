@@ -21,8 +21,7 @@ const Mission = () => {
                             Introducing Refresher Course <span className="text-[#800000]"> in Heavy Motor Vehicle Driving</span>
                         </h2>
                         <p className="text-gray-600 mb-8">
-                            In case of URGENT appointment, you may apply for Tatkal by emailing an application to
-                            info@itdcpunjab.com. You can also hand over the applications in-person at Dharam Complex, G.T. Road, Kartarpur, Jalandhar, 144801 from 9 A.M to 5 P.M. Fees for Tatkal class is Rs 2000/- which is
+                            In case of URGENT appointment, you can call us on +91 90560-66473,+91 90560-66373 for Tatkal admissions. You can also hand over the applications in-person at Dharam Complex, G.T. Road, Kartarpur, Jalandhar, 144801 from 9 A.M to 5 P.M. Fees for Tatkal class is Rs 2000/- which is
                             collected in CASH at the time of class. Please mention your phone number and attach a copy of Aadhar card
                             and Driving License in your Tatkal application. <b>Online registration is NOT REQUIRED for Tatkal.</b>
                         </p>
