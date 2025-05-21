@@ -38,11 +38,11 @@ const Footer = () => {
                   Courses
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href="/gallery" className="hover:underline">
                   Gallery
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link href="/contact" className="hover:underline">
                   Contact Us
