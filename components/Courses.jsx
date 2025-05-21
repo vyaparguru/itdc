@@ -26,11 +26,11 @@ const RefresherCourse = () => {
 
         <h2 className="text-xl font-semibold text-gray-800 mt-6"></h2>
         Key Objectives:
-       <li>Improve driving skills and techniques for heavy vehicles (trucks, buses, tankers, etc.).</li>
-       <li>Update knowledge of the latest traffic rules, road safety norms, and transport regulations.</li>
-       <li>Promote defensive driving and accident prevention strategies.</li>
-       <li>Enhance awareness of vehicle maintenance, fuel efficiency, and environmental concerns.</li>
-       <li>Reinforce responsible behavior, including fitness to drive, stress management, and discipline on the road.</li>
+        <li>Improve driving skills and techniques for heavy vehicles (trucks, buses, tankers, etc.).</li>
+        <li>Update knowledge of the latest traffic rules, road safety norms, and transport regulations.</li>
+        <li>Promote defensive driving and accident prevention strategies.</li>
+        <li>Enhance awareness of vehicle maintenance, fuel efficiency, and environmental concerns.</li>
+        <li>Reinforce responsible behavior, including fitness to drive, stress management, and discipline on the road.</li>
       </p>
 
       {/* Course Includes */}
@@ -71,26 +71,15 @@ const RefresherCourse = () => {
       </ul>
 
       {/* Course Fee */}
-      <h2 className="text-xl font-semibold text-gray-800 mt-6">
+      {/* <h2 className="text-xl font-semibold text-gray-800 mt-6">
         Course Fee (NON-REFUNDABLE):
       </h2>
-      <p className="text-gray-700">₹ 430 (GST inclusive)</p>
+      <p className="text-gray-700">₹ 430 (GST inclusive)</p> */}
 
       {/* Important Note */}
       <div className="bg-gray-100 p-4 mt-6 rounded-lg">
         <p className="text-gray-700">
-          In case of URGENT appointment, you may apply for Tatkal by emailing an
-          application to{" "}
-          <a
-            href="mailto:jaldrivingcenter@gmail.com"
-            className="text-[#800000] underline"
-          >
-            jaldrivingcenter@gmail.com
-          </a>
-          . You can also hand over the applications in-person at Dharam Complex, G.T. Road, Kartarpur, Jalandhar, 144801 from 9 A.M to 5  P.M
-          Fees for Tatkal cases is Rs 2000/- which is collected in CASH at the
-          time of class. Please mention your phone number and attach a copy of
-          Aadhaar card and Driving License in your Tatkal application.
+          In case of URGENT appointment, you can call us on +91 90560-66473,+91 90560-66373 for Tatkal admissions. You can also hand over the applications in-person at Dharam Complex, G.T. Road, Kartarpur, Jalandhar, 144801 from 9 A.M to 5 P.M. Please carry copy of Aadhar card, Driving License and two passport size Photos with your Tatkal application.Online registration is NOT REQUIRED for Tatkal.
         </p>
       </div>
 
