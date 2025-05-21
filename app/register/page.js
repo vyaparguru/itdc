@@ -16,9 +16,57 @@ export default function RegistrationForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setStatus('Submitting...')
+    setStatus('')
 
-    const formData = new FormData(e.target)
+    const form = e.target
+    // List all field names (including file inputs)
+    const requiredFields = [
+      'name', 'fathersName', 'dob', 'mobile', 'email', 'qualification',
+      'passportPhoto', 'address', 'state', 'city', 'pincode', 'district',
+      'aadharNumber', 'aadharFront', 'aadharBack', 'licenseNumber',
+      'licenseCategory', 'licenseIssueDate', 'licenseExpiryDate',
+      'issuingAuthority', 'licenseFront', 'licenseBack', 'date', 'place'
+    ]
+
+    // Check for empty fields
+    for (let field of requiredFields) {
+      const input = form.elements[field]
+      if (!input || (input.type === 'file' ? !input.files[0] : !input.value.trim())) {
+        setStatus('Please fill in all the fields')
+        return
+      }
+    }
+
+    // Name validation: only letters and spaces
+    const name = form.elements['name'].value.trim()
+    if (!/^[A-Za-z\s]+$/.test(name)) {
+      setStatus('Name must contain only letters and spaces')
+      return
+    }
+
+    // Email validation: must contain @ and .com
+    const email = form.elements['email'].value.trim()
+    if (!email.includes('@') || !email.endsWith('.com')) {
+      setStatus('Email must contain "@" and end with ".com"')
+      return
+    }
+
+    // Mobile number: must be 10 digits and only numbers
+    const mobile = form.elements['mobile'].value.trim()
+    if (!/^\d{10}$/.test(mobile)) {
+      setStatus('Mobile number must be exactly 10 digits')
+      return
+    }
+
+    // Aadhar number: must be 12 digits and only numbers
+    const aadhar = form.elements['aadharNumber'].value.trim()
+    if (!/^\d{12}$/.test(aadhar)) {
+      setStatus('Aadhar number must be exactly 12 digits')
+      return
+    }
+
+    setStatus('Submitting...')
+    const formData = new FormData(form)
 
     try {
       const res = await fetch('/api/register', {
@@ -42,38 +90,40 @@ export default function RegistrationForm() {
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-5xl text-black bg-white p-8 shadow-md rounded"
+        autoComplete="off"
       >
         <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 leading-snug mb-5"><span className='text-[#800000]'>Registration</span> <span>Form</span></h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-gray-black font-semibold">Name</label>
-            <input name="name" className="border border-gray-600 p-2 w-full" />
+            <input name="name" className="border border-gray-600 p-2 w-full" type="text" />
           </div>
 
           <div>
             <label className="block text-gray-black font-semibold">Father's Name</label>
-            <input name="fathersName" className="border border-gray-600 p-2 w-full" />
+            <input name="fathersName" className="border border-gray-600 p-2 w-full" type="text" />
           </div>
 
           <div>
             <label className="block text-gray-black font-semibold">Date of Birth</label>
-            <input type="date" name="dob" className="border border-gray-600 p-2 w-full" />
+            <input name="dob" className="border border-gray-600 p-2 w-full" type="date" />
           </div>
 
           <div>
             <label className="block text-gray-black font-semibold">Mobile No.</label>
-            <input name="mobile" className="border border-gray-600 p-2 w-full" />
+            <input name="mobile" className="border border-gray-600 p-2 w-full" type="text" />
           </div>
 
           <div>
             <label className="block text-gray-black font-semibold">Email</label>
-            <input type="email" name="email" className="border border-gray-600 p-2 w-full" />
+            <input name="email" className="border border-gray-600 p-2 w-full" type="text" />
           </div>
 
           <div>
             <label className="block text-gray-black font-semibold">Qualification</label>
             <select name="qualification" className="border border-gray-600 p-2 w-full">
+              <option value="">Select</option>
               <option>5th standard</option>
               <option>8th standard</option>
               <option>10th standard</option>
@@ -107,12 +157,13 @@ export default function RegistrationForm() {
 
           <div className="md:col-span-2">
             <label className="block text-gray-black font-semibold">Address</label>
-            <input name="address" className="border border-gray-600 p-2 w-full" />
+            <input name="address" className="border border-gray-600 p-2 w-full" type="text" />
           </div>
 
           <div>
             <label className="block text-gray-black font-semibold">State</label>
             <select name="state" className="border border-gray-600 p-2 w-full">
+              <option value="">Select</option>
               <option>Andaman and Nicobar Islands</option>
               <option>Andhra Pradesh</option>
               <option>Arunachal Pradesh</option>
@@ -154,22 +205,22 @@ export default function RegistrationForm() {
 
           <div>
             <label className="block text-gray-black font-semibold">City</label>
-            <input name="city" className="border border-gray-600 p-2 w-full" />
+            <input name="city" className="border border-gray-600 p-2 w-full" type="text" />
           </div>
 
           <div>
             <label className="block text-gray-black font-semibold">Pincode</label>
-            <input name="pincode" className="border border-gray-600 p-2 w-full" />
+            <input name="pincode" className="border border-gray-600 p-2 w-full" type="text" />
           </div>
 
           <div>
             <label className="block text-gray-black font-semibold">District</label>
-            <input name="district" className="border border-gray-600 p-2 w-full" />
+            <input name="district" className="border border-gray-600 p-2 w-full" type="text" />
           </div>
 
           <div>
             <label className="block text-gray-black font-semibold">Aadhar Card Number</label>
-            <input name="aadharNumber" className="border border-gray-600 p-2 w-full" />
+            <input name="aadharNumber" className="border border-gray-600 p-2 w-full" type="text" />
           </div>
 
           <div>
@@ -184,12 +235,13 @@ export default function RegistrationForm() {
 
           <div>
             <label className="block text-gray-black font-semibold">Driving License Number</label>
-            <input name="licenseNumber" className="border border-gray-600 p-2 w-full" />
+            <input name="licenseNumber" className="border border-gray-600 p-2 w-full" type="text" />
           </div>
 
           <div>
             <label className="block text-gray-black font-semibold">License Category</label>
             <select name="licenseCategory" className="border border-gray-600 p-2 w-full">
+              <option value="">Select</option>
               <option>LMV</option>
               <option>HMV</option>
               <option>LTV</option>
@@ -199,17 +251,17 @@ export default function RegistrationForm() {
 
           <div>
             <label className="block text-gray-black font-semibold">License Issue Date</label>
-            <input type="date" name="licenseIssueDate" className="border border-gray-600 p-2 w-full" />
+            <input name="licenseIssueDate" className="border border-gray-600 p-2 w-full" type="date" />
           </div>
-
           <div>
             <label className="block text-gray-black font-semibold">License Expiry Date</label>
-            <input type="date" name="licenseExpiryDate" className="border border-gray-600 p-2 w-full" />
+            <input name="licenseExpiryDate" className="border border-gray-600 p-2 w-full" type="date" />
           </div>
 
           <div>
             <label className="block text-gray-black font-semibold">Issuing Authority</label>
             <select name="issuingAuthority" className="border border-gray-600 p-2 w-full">
+              <option value="">Select</option>
               <option>RTO</option>
               <option>DTO</option>
               <option>SDM</option>
@@ -229,17 +281,16 @@ export default function RegistrationForm() {
           <div>
             <label className="block text-gray-black font-semibold">Date</label>
             <input
-              type="text"
               name="date"
-              value={new Date().toISOString().split('T')[0]}
-              readOnly
               className="border border-gray-600 p-2 w-full"
+              type="text"
+              defaultValue={new Date().toISOString().split('T')[0]}
             />
           </div>
 
           <div>
             <label className="block text-gray-black font-semibold">Place</label>
-            <input name="place" className="border border-gray-600 p-2 w-full" />
+            <input name="place" className="border border-gray-600 p-2 w-full" type="text" />
           </div>
         </div>
 
@@ -252,7 +303,7 @@ export default function RegistrationForm() {
         {/* <p className="text-center text-gray-700 mt-2">
           Upon successful registration, you will be redirected to the online payment screen to pay ₹430.
         </p> */}
-        {status && <p className="mt-4 text-sm text-gray-700">{status}</p>}
+        {status && <p className="mt-4 text-md font-medium text-red-600">{status}</p>}
       </form>
     </div>
   )
