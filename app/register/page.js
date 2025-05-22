@@ -4,6 +4,14 @@ import { useState } from 'react'
 export default function RegistrationForm() {
   const [status, setStatus] = useState('')
   const [profilePhoto, setProfilePhoto] = useState(null)
+  const [fieldErrors, setFieldErrors] = useState({})
+  const [fileErrors, setFileErrors] = useState({
+    passportPhoto: '',
+    aadharFront: '',
+    aadharBack: '',
+    licenseFront: '',
+    licenseBack: '',
+  })
 
   const handleProfilePhotoChange = (e) => {
     const file = e.target.files[0]
@@ -13,55 +21,124 @@ export default function RegistrationForm() {
       reader.readAsDataURL(file)
     }
   }
+  // Helper to validate file type
+  const isValidJpg = (file) => {
+    if (!file) return true
+    const validTypes = ['image/jpeg', 'image/jpg']
+    const fileType = file.type
+    const fileName = file.name.toLowerCase()
+    return (
+      validTypes.includes(fileType) ||
+      fileName.endsWith('.jpg') ||
+      fileName.endsWith('.jpeg')
+    )
+  }
+
+  // Unified file change handler for all file fields
+  const handleFileChange = (e) => {
+    const { name, files } = e.target
+    let error = ''
+    if (files && files[0] && !isValidJpg(files[0])) {
+      error = 'Only JPG/JPEG files are allowed'
+    }
+    setFileErrors((prev) => ({ ...prev, [name]: error }))
+
+    // For profile photo preview
+    if (name === 'passportPhoto' && files && files[0] && !error) {
+      const reader = new FileReader()
+      reader.onload = () => setProfilePhoto(reader.result)
+      reader.readAsDataURL(files[0])
+    } else if (name === 'passportPhoto' && (!files || !files[0] || error)) {
+      setProfilePhoto(null)
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setStatus('')
+    setFieldErrors({})
 
     const form = e.target
     // List all field names (including file inputs)
     const requiredFields = [
       'name', 'fathersName', 'dob', 'mobile', 'email', 'qualification',
       'passportPhoto', 'address', 'state', 'city', 'pincode', 'district',
-      'aadharNumber', 'aadharFront', 'aadharBack', 'licenseNumber',
-      'licenseCategory', 'licenseIssueDate', 'licenseExpiryDate',
-      'issuingAuthority', 'licenseFront', 'licenseBack', 'date', 'place'
+      'aadharNumber', 'licenseNumber', 'date', 
     ]
+
+
+    let errors = {}
 
     // Check for empty fields
     for (let field of requiredFields) {
       const input = form.elements[field]
       if (!input || (input.type === 'file' ? !input.files[0] : !input.value.trim())) {
-        setStatus('Please fill in all the fields')
-        return
+        errors[field] = 'This field is required'
       }
     }
 
+    // File type validation for image uploads (jpg/jpeg only)
+    const fileFields = [
+      'passportPhoto', 'aadharFront', 'aadharBack', 'licenseFront', 'licenseBack'
+    ]
+    let newFileErrors = { ...fileErrors }
+    for (let field of fileFields) {
+      const input = form.elements[field]
+      if (input && input.files[0]) {
+        if (!isValidJpg(input.files[0])) {
+          errors[field] = 'Only JPG/JPEG files are allowed'
+          newFileErrors[field] = 'Only JPG/JPEG files are allowed'
+        } else {
+          newFileErrors[field] = ''
+        }
+      }
+    }
+    setFileErrors(newFileErrors)
+
     // Name validation: only letters and spaces
     const name = form.elements['name'].value.trim()
-    if (!/^[A-Za-z\s]+$/.test(name)) {
-      setStatus('Name must contain only letters and spaces')
-      return
+    if (name && !/^[A-Za-z\s]+$/.test(name)) {
+      errors['name'] = 'Name must contain only letters and spaces'
+    }
+
+    const fathersName = form.elements['fathersName'].value.trim()
+    if (fathersName && !/^[A-Za-z\s]+$/.test(fathersName)) {
+      errors['fathersName'] = "Father's Name must contain only letters and spaces"
     }
 
     // Email validation: must contain @ and .com
     const email = form.elements['email'].value.trim()
-    if (!email.includes('@') || !email.endsWith('.com')) {
-      setStatus('Email must contain "@" and end with ".com"')
-      return
+    if (email && (!email.includes('@') || !email.endsWith('.com'))) {
+      errors['email'] = 'Email must contain "@" and end with ".com"'
     }
 
     // Mobile number: must be 10 digits and only numbers
     const mobile = form.elements['mobile'].value.trim()
-    if (!/^\d{10}$/.test(mobile)) {
-      setStatus('Mobile number must be exactly 10 digits')
-      return
+    if (mobile && !/^\d{10}$/.test(mobile)) {
+      errors['mobile'] = 'Mobile number must be exactly 10 digits'
     }
+
 
     // Aadhar number: must be 12 digits and only numbers
     const aadhar = form.elements['aadharNumber'].value.trim()
-    if (!/^\d{12}$/.test(aadhar)) {
-      setStatus('Aadhar number must be exactly 12 digits')
+    if (aadhar && !/^\d{12}$/.test(aadhar)) {
+      errors['aadharNumber'] = 'Aadhar number must be exactly 12 digits'
+    }
+
+    const pincode = form.elements['pincode'].value.trim()
+    if (pincode && !/^\d{6}$/.test(pincode)) {
+      errors['pincode'] = 'Pincode must be exactly 6 digits'
+    }
+
+    const errorCount = Object.keys(errors).length
+    if (errorCount > 0) {
+      if (errorCount > 4) {
+        setStatus('Please fill in all the fields')
+        setFieldErrors({})
+      } else {
+        setStatus('Please correct the errors')
+        setFieldErrors(errors)
+      }
       return
     }
 
@@ -96,32 +173,44 @@ export default function RegistrationForm() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-gray-black font-semibold">Name</label>
+            <label className="block text-gray-black font-semibold">Name<span className="text-red-600">*</span></label>
             <input name="name" className="border border-gray-600 p-2 w-full" type="text" />
+            {fieldErrors.name && (
+              <p className="text-red-600 text-sm mt-1">{fieldErrors.name}</p>
+            )}
           </div>
 
           <div>
-            <label className="block text-gray-black font-semibold">Father's Name</label>
+            <label className="block text-gray-black font-semibold">Father's Name<span className="text-red-600">*</span></label>
             <input name="fathersName" className="border border-gray-600 p-2 w-full" type="text" />
+            {fieldErrors.fathersName && (
+              <p className="text-red-600 text-sm mt-1">{fieldErrors.fathersName}</p>
+            )}
           </div>
 
           <div>
-            <label className="block text-gray-black font-semibold">Date of Birth</label>
+            <label className="block text-gray-black font-semibold">Date of Birth<span className="text-red-600">*</span></label>
             <input name="dob" className="border border-gray-600 p-2 w-full" type="date" />
           </div>
 
           <div>
-            <label className="block text-gray-black font-semibold">Mobile No.</label>
+            <label className="block text-gray-black font-semibold">Mobile No.<span className="text-red-600">*</span></label>
             <input name="mobile" className="border border-gray-600 p-2 w-full" type="text" />
+            {fieldErrors.mobile && (
+              <p className="text-red-600 text-sm mt-1">{fieldErrors.mobile}</p>
+            )}
           </div>
 
           <div>
-            <label className="block text-gray-black font-semibold">Email</label>
+            <label className="block text-gray-black font-semibold">Email<span className="text-red-600">*</span></label>
             <input name="email" className="border border-gray-600 p-2 w-full" type="text" />
+            {fieldErrors.email && (
+              <p className="text-red-600 text-sm mt-1">{fieldErrors.email}</p>
+            )}
           </div>
 
           <div>
-            <label className="block text-gray-black font-semibold">Qualification</label>
+            <label className="block text-gray-black font-semibold">Qualification<span className="text-red-600">*</span></label>
             <select name="qualification" className="border border-gray-600 p-2 w-full">
               <option value="">Select</option>
               <option>5th standard</option>
@@ -134,14 +223,17 @@ export default function RegistrationForm() {
           </div>
 
           <div>
-            <label className="block text-gray-black font-semibold">Passport Size Photo</label>
+            <label className="block text-gray-black font-semibold">Passport Size Photo<span className="text-red-600">*</span></label>
             <input
               type="file"
               name="passportPhoto"
-              accept="image/*"
-              onChange={handleProfilePhotoChange}
+              accept=".jpg,.jpeg,image/jpeg"
+              onChange={handleFileChange}
               className="border border-gray-600 p-2 w-full"
             />
+            {fileErrors.passportPhoto && (
+              <p className="text-red-600 text-sm mt-1">{fileErrors.passportPhoto}</p>
+            )}
           </div>
 
           <div>
@@ -156,12 +248,12 @@ export default function RegistrationForm() {
           </div>
 
           <div className="md:col-span-2">
-            <label className="block text-gray-black font-semibold">Address</label>
+            <label className="block text-gray-black font-semibold">Address<span className="text-red-600">*</span></label>
             <input name="address" className="border border-gray-600 p-2 w-full" type="text" />
           </div>
 
           <div>
-            <label className="block text-gray-black font-semibold">State</label>
+            <label className="block text-gray-black font-semibold">State<span className="text-red-600">*</span></label>
             <select name="state" className="border border-gray-600 p-2 w-full">
               <option value="">Select</option>
               <option>Andaman and Nicobar Islands</option>
@@ -204,37 +296,61 @@ export default function RegistrationForm() {
           </div>
 
           <div>
-            <label className="block text-gray-black font-semibold">City</label>
+            <label className="block text-gray-black font-semibold">City<span className="text-red-600">*</span></label>
             <input name="city" className="border border-gray-600 p-2 w-full" type="text" />
           </div>
 
           <div>
-            <label className="block text-gray-black font-semibold">Pincode</label>
+            <label className="block text-gray-black font-semibold">Pincode<span className="text-red-600">*</span></label>
             <input name="pincode" className="border border-gray-600 p-2 w-full" type="text" />
+            {fieldErrors.pincode && (
+              <p className="text-red-600 text-sm mt-1">{fieldErrors.pincode}</p>
+            )}
           </div>
 
           <div>
-            <label className="block text-gray-black font-semibold">District</label>
+            <label className="block text-gray-black font-semibold">District<span className="text-red-600">*</span></label>
             <input name="district" className="border border-gray-600 p-2 w-full" type="text" />
           </div>
 
           <div>
-            <label className="block text-gray-black font-semibold">Aadhar Card Number</label>
+            <label className="block text-gray-black font-semibold">Aadhar Card Number<span className="text-red-600">*</span></label>
             <input name="aadharNumber" className="border border-gray-600 p-2 w-full" type="text" />
+            {fieldErrors.aadharNumber && (
+              <p className="text-red-600 text-sm mt-1">{fieldErrors.aadharNumber}</p>
+            )}
           </div>
 
           <div>
             <label className="block text-gray-black font-semibold">Aadhar Front Side</label>
-            <input type="file" name="aadharFront" accept="image/*" className="border border-gray-600 p-2 w-full" />
+            <input
+              type="file"
+              name="aadharFront"
+              accept=".jpg,.jpeg,image/jpeg"
+              onChange={handleFileChange}
+              className="border border-gray-600 p-2 w-full"
+            />
+            {fileErrors.aadharFront && (
+              <p className="text-red-600 text-sm mt-1">{fileErrors.aadharFront}</p>
+            )}
           </div>
 
           <div>
             <label className="block text-gray-black font-semibold">Aadhar Back Side</label>
-            <input type="file" name="aadharBack" accept="image/*" className="border border-gray-600 p-2 w-full" />
+            <input
+              type="file"
+              name="aadharBack"
+              accept=".jpg,.jpeg,image/jpeg"
+              onChange={handleFileChange}
+              className="border border-gray-600 p-2 w-full"
+            />
+            {fileErrors.aadharBack && (
+              <p className="text-red-600 text-sm mt-1">{fileErrors.aadharBack}</p>
+            )}
           </div>
 
           <div>
-            <label className="block text-gray-black font-semibold">Driving License Number</label>
+            <label className="block text-gray-black font-semibold">Driving License Number<span className="text-red-600">*</span></label>
             <input name="licenseNumber" className="border border-gray-600 p-2 w-full" type="text" />
           </div>
 
@@ -270,12 +386,30 @@ export default function RegistrationForm() {
 
           <div>
             <label className="block text-gray-black font-semibold">Driving License Front Side</label>
-            <input type="file" name="licenseFront" accept="image/*" className="border border-gray-600 p-2 w-full" />
+            <input
+              type="file"
+              name="licenseFront"
+              accept=".jpg,.jpeg,image/jpeg"
+              onChange={handleFileChange}
+              className="border border-gray-600 p-2 w-full"
+            />
+            {fileErrors.licenseFront && (
+              <p className="text-red-600 text-sm mt-1">{fileErrors.licenseFront}</p>
+            )}
           </div>
 
           <div>
             <label className="block text-gray-black font-semibold">Driving License Back Side</label>
-            <input type="file" name="licenseBack" accept="image/*" className="border border-gray-600 p-2 w-full" />
+            <input
+              type="file"
+              name="licenseBack"
+              accept=".jpg,.jpeg,image/jpeg"
+              onChange={handleFileChange}
+              className="border border-gray-600 p-2 w-full"
+            />
+            {fileErrors.licenseBack && (
+              <p className="text-red-600 text-sm mt-1">{fileErrors.licenseBack}</p>
+            )}
           </div>
 
           <div>
@@ -284,7 +418,15 @@ export default function RegistrationForm() {
               name="date"
               className="border border-gray-600 p-2 w-full"
               type="text"
-              defaultValue={new Date().toISOString().split('T')[0]}
+              defaultValue={
+                (() => {
+                  const d = new Date()
+                  const day = String(d.getDate()).padStart(2, '0')
+                  const month = String(d.getMonth() + 1).padStart(2, '0')
+                  const year = d.getFullYear()
+                  return `${day}-${month}-${year}`
+                })()
+              }
             />
           </div>
 
