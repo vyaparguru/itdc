@@ -54,7 +54,7 @@ const RefresherCourse = () => {
         Eligibility Criteria:
       </h2>
       <ul className="list-disc list-inside text-gray-700 mt-2">
-        <li>Passed 8th standard</li>
+        {/* <li>Passed 8th standard</li> */}
         <li>Age above 18 years</li>
         <li>
           Proof of age, address, and driving license should be submitted along
