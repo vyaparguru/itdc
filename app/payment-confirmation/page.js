@@ -1,7 +1,8 @@
 'use client'
+import { Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 
-export default function PaymentConfirmation() {
+function PaymentConfirmationInner() {
   const params = useSearchParams()
   const uniqueId = params.get('uid')
 
@@ -13,5 +14,13 @@ export default function PaymentConfirmation() {
         <p className="font-semibold">Your Unique ID: <span className="text-blue-700">{uniqueId}</span></p>
       </div>
     </div>
+  )
+}
+
+export default function PaymentConfirmation() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PaymentConfirmationInner />
+    </Suspense>
   )
 }
