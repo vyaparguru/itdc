@@ -113,7 +113,7 @@ export async function POST(req) {
 
     await transporter.sendMail(mailOptions)
     console.log('Email Sent Successfully')
-    return NextResponse.json({ success: true })
+    return NextResponse.json({ success: true,uniqueId })
   } catch (e) {
     console.error('Error in POST Handler:', e)
     return NextResponse.json({ success: false }, { status: 500 })

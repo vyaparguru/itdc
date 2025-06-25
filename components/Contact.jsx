@@ -38,7 +38,7 @@ const ContactPage = () => {
       </div>
 
       {/* Google Map */}
-      {/* <div className="mt-12">
+      <div className="mt-12">
         <div className="w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
           <iframe
             className="w-full h-full"
@@ -47,7 +47,7 @@ const ContactPage = () => {
             referrerPolicy="no-referrer-when-downgrade"
           ></iframe>
         </div>
-      </div> */}
+      </div>
     </section>
   );
 };

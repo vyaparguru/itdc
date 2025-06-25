@@ -1,7 +1,11 @@
 'use client'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 export default function RegistrationForm() {
+  const [showModal, setShowModal] = useState(false)
+  const [uniqueId, setUniqueId] = useState('')
+  const formRef = useRef(null)
+
   const [status, setStatus] = useState('')
   const [profilePhoto, setProfilePhoto] = useState(null)
   const [fieldErrors, setFieldErrors] = useState({})
@@ -12,6 +16,36 @@ export default function RegistrationForm() {
     licenseFront: '',
     licenseBack: '',
   })
+
+  const handlePayment = () => {
+    if (!uniqueId) return
+    const options = {
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'rzp_live_hL8phhT9y9mI4X',
+      amount: 88500, // 885 INR in paise
+      currency: 'INR',
+      name: 'Jal Driving Centre',
+      description: `Registration Payment (ID: ${uniqueId})`,
+      handler: function (response) {
+        window.location.href = `/payment-confirmation?uid=${uniqueId}`
+      },
+      prefill: {},
+      notes: { uniqueId },
+      theme: { color: '#800000' },
+    }
+    const rzp = new window.Razorpay(options)
+    rzp.open()
+  }
+
+  // Load Razorpay script
+  const loadRazorpayScript = () => {
+    if (window.Razorpay) return Promise.resolve()
+    return new Promise((resolve) => {
+      const script = document.createElement('script')
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js'
+      script.onload = resolve
+      document.body.appendChild(script)
+    })
+  }
 
   const handleProfilePhotoChange = (e) => {
     const file = e.target.files[0]
@@ -152,8 +186,21 @@ export default function RegistrationForm() {
       })
 
       const data = await res.json()
-      if (data.success) {
-        setStatus('Form submitted successfully. Check email.')
+      if (data.success && data.uniqueId) {
+        setStatus('')
+        setUniqueId(data.uniqueId)
+        setShowModal(true)
+        formRef.current.reset()
+        setProfilePhoto(null)
+        setFieldErrors({})
+        setFileErrors({
+          passportPhoto: '',
+          aadharFront: '',
+          aadharBack: '',
+          licenseFront: '',
+          licenseBack: '',
+        })
+        setStatus('Form submitted successfully!')
       } else {
         setStatus('Failed to submit form.')
       }
@@ -163,8 +210,33 @@ export default function RegistrationForm() {
   }
 
   return (
-    <div className="max-w-screen bg-gray-100 flex items-center justify-center px-4 py-32">
+    <div className="max-w-screen bg-gray-100 flex items-center justify-center px-4 py-40">
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/30">
+          <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full text-center">
+            <h2 className="text-2xl font-bold mb-4 text-[#800000]">Thank you for registering!</h2>
+            <p className="mb-2 text-gray-900">Your registration was successful.</p>
+            <p className="mb-4 font-semibold text-gray-900">Your Unique ID: <span className="text-blue-700">{uniqueId}</span></p>
+            <button
+              className="bg-[#800000] text-white px-4 py-2 rounded mb-2 w-full"
+              onClick={async () => {
+                await loadRazorpayScript()
+                handlePayment()
+              }}
+            >
+              Make Payment (₹885)
+            </button>
+            <button
+              className="mt-2 text-gray-600 underline"
+              onClick={() => setShowModal(false)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
       <form
+      ref={formRef}
         onSubmit={handleSubmit}
         className="w-full max-w-5xl text-black bg-white p-8 shadow-md rounded"
         autoComplete="off"
