@@ -9,6 +9,7 @@ export default function PayLaterButton() {
     if (!uniqueId) return
     const options = {
       key: process.env.RAZORPAY_KEY_ID || 'rzp_live_CG5HThTQPJqpX4',
+      
       amount: 88500,
       currency: 'INR',
       name: 'Jal Driving Centre',
