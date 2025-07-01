@@ -16,7 +16,6 @@ export default function RegistrationForm() {
     licenseFront: '',
     licenseBack: '',
   })
-
   const handlePayment = () => {
     if (!uniqueId) return
     const options = {
