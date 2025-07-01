@@ -217,8 +217,8 @@ export default function RegistrationForm() {
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/30">
           <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full text-center">
-            <h2 className="text-2xl font-bold mb-4 text-[#800000]">Thank you for registering!</h2>
-            <p className="mb-2 text-gray-900">Your registration was successful.</p>
+            <h2 className="text-2xl font-bold mb-4 text-[#800000]">Kindly make payment for registration</h2>
+            <p className="mb-2 text-gray-900">Application would be void without receipt of payment!</p>
             <p className="mb-4 font-semibold text-gray-900">Your Unique ID: <span className="text-blue-700">{uniqueId}</span></p>
             <button
               className="bg-[#800000] text-white px-4 py-2 rounded mb-2 w-full"
@@ -228,12 +228,12 @@ export default function RegistrationForm() {
             >
               Make Payment (₹885)
             </button>
-            <button
+            {/* <button
               className="mt-2 text-gray-600 underline"
               onClick={() => setShowModal(false)}
             >
               Close
-            </button>
+            </button> */}
           </div>
         </div>
       )}
