@@ -16,8 +16,23 @@ export default function RegistrationForm() {
     licenseFront: '',
     licenseBack: '',
   })
-  const handlePayment = () => {
+  const handlePayment = async() => {
     if (!uniqueId) return
+    await loadRazorpayScript()
+  
+  const res = await fetch('/api/create-order', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      amount: 88500, 
+      receipt: uniqueId,
+    }),
+  })
+  const data = await res.json()
+  if (!data.orderId) {
+    setStatus('Failed to initiate payment')
+    return
+  }
     const options = {
       key: process.env.RAZORPAY_KEY_ID || 'rzp_live_CG5HThTQPJqpX4',
       amount: 88500, 
@@ -35,7 +50,6 @@ export default function RegistrationForm() {
     rzp.open()
   }
 
-  // Load Razorpay script
   const loadRazorpayScript = () => {
     if (window.Razorpay) return Promise.resolve()
     return new Promise((resolve) => {
@@ -54,7 +68,6 @@ export default function RegistrationForm() {
       reader.readAsDataURL(file)
     }
   }
-  // Helper to validate file type
   const isValidJpg = (file) => {
     if (!file) return true
     const validTypes = ['image/jpeg', 'image/jpg']
@@ -67,7 +80,6 @@ export default function RegistrationForm() {
     )
   }
 
-  // Unified file change handler for all file fields
   const handleFileChange = (e) => {
     const { name, files } = e.target
     let error = ''
@@ -92,7 +104,6 @@ export default function RegistrationForm() {
     setFieldErrors({})
 
     const form = e.target
-    // List all field names (including file inputs)
     const requiredFields = [
       'name', 'fathersName', 'dob', 'mobile', 'email', 'qualification',
       'passportPhoto', 'address', 'state', 'city', 'pincode', 'district',
@@ -102,7 +113,6 @@ export default function RegistrationForm() {
 
     let errors = {}
 
-    // Check for empty fields
     for (let field of requiredFields) {
       const input = form.elements[field]
       if (!input || (input.type === 'file' ? !input.files[0] : !input.value.trim())) {
@@ -110,7 +120,6 @@ export default function RegistrationForm() {
       }
     }
 
-    // File type validation for image uploads (jpg/jpeg only)
     const fileFields = [
       'passportPhoto', 'aadharFront', 'aadharBack', 'licenseFront', 'licenseBack'
     ]
@@ -128,7 +137,6 @@ export default function RegistrationForm() {
     }
     setFileErrors(newFileErrors)
 
-    // Name validation: only letters and spaces
     const name = form.elements['name'].value.trim()
     if (name && !/^[A-Za-z\s]+$/.test(name)) {
       errors['name'] = 'Name must contain only letters and spaces'
@@ -139,20 +147,16 @@ export default function RegistrationForm() {
       errors['fathersName'] = "Father's Name must contain only letters and spaces"
     }
 
-    // Email validation: must contain @ and .com
     const email = form.elements['email'].value.trim()
     if (email && (!email.includes('@') || !email.endsWith('.com'))) {
       errors['email'] = 'Email must contain "@" and end with ".com"'
     }
 
-    // Mobile number: must be 10 digits and only numbers
     const mobile = form.elements['mobile'].value.trim()
     if (mobile && !/^\d{10}$/.test(mobile)) {
       errors['mobile'] = 'Mobile number must be exactly 10 digits'
     }
 
-
-    // Aadhar number: must be 12 digits and only numbers
     const aadhar = form.elements['aadharNumber'].value.trim()
     if (aadhar && !/^\d{12}$/.test(aadhar)) {
       errors['aadharNumber'] = 'Aadhar number must be exactly 12 digits'
@@ -218,10 +222,9 @@ export default function RegistrationForm() {
             <p className="mb-4 font-semibold text-gray-900">Your Unique ID: <span className="text-blue-700">{uniqueId}</span></p>
             <button
               className="bg-[#800000] text-white px-4 py-2 rounded mb-2 w-full"
-              onClick={async () => {
-                await loadRazorpayScript()
+              onClick={
                 handlePayment()
-              }}
+              }
             >
               Make Payment (₹885)
             </button>
