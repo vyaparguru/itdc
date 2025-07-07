@@ -42,7 +42,9 @@ const ContactPage = () => {
         <div className="w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
           <iframe
             className="w-full h-full"
-            src="https://www.google.com/maps?q=Hoshiarpur+Institute+Of+Automotive+and+Driving+Skills,+Red+Cross+Building,+Bazar+Vakilan,+Hoshiarpur,+Punjab+146001&output=embed"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3404.0004265987864!2d75.49099489999999!3d31.441655199999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391a4d99379c1fb9%3A0x26e64d1197b3f51!2sJalandhar%20Institute%20Of%20Drivers%20Training!5e0!3m2!1sen!2sin!4v1751543862310!5m2!1sen!2sin"
+            style={{ border: 0 }}
+            allowFullScreen=""
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
           ></iframe>
