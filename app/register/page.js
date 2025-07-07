@@ -24,31 +24,32 @@ export default function RegistrationForm() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      amount: 88500, 
+      amount: 88500,
       receipt: uniqueId,
     }),
-  })
-  const data = await res.json()
+  });
+  const data = await res.json();
   if (!data.orderId) {
-    setStatus('Failed to initiate payment')
-    return
+    setStatus('Failed to initiate payment');
+    return;
   }
     const options = {
-      key: process.env.RAZORPAY_KEY_ID || 'rzp_live_CG5HThTQPJqpX4',
-      amount: 88500, 
-      currency: 'INR',
-      name: 'Jal Driving Centre',
-      description: `Registration Payment (ID: ${uniqueId})`,
-      handler: function (response) {
-        window.location.href = `/payment-confirmation?uid=${uniqueId}`
-      },
-      prefill: {},
-      notes: { uniqueId },
-      theme: { color: '#800000' },
-    }
-    const rzp = new window.Razorpay(options)
-    rzp.open()
-  }
+    key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'rzp_live_CG5HThTQPJqpX4',
+    amount: 88500,
+    currency: 'INR',
+    name: 'Jal Driving Centre',
+    description: `Registration Payment (ID: ${uniqueId})`,
+    order_id: data.orderId, 
+    handler: function (response) {
+      window.location.href = `/payment-confirmation?uid=${uniqueId}`;
+    },
+    prefill: {},
+    notes: { uniqueId },
+    theme: { color: '#800000' },
+  };
+  const rzp = new window.Razorpay(options);
+  rzp.open();
+};
 
   const loadRazorpayScript = () => {
     if (window.Razorpay) return Promise.resolve()
@@ -88,7 +89,6 @@ export default function RegistrationForm() {
     }
     setFileErrors((prev) => ({ ...prev, [name]: error }))
 
-    // For profile photo preview
     if (name === 'passportPhoto' && files && files[0] && !error) {
       const reader = new FileReader()
       reader.onload = () => setProfilePhoto(reader.result)
@@ -109,7 +109,6 @@ export default function RegistrationForm() {
       'passportPhoto', 'address', 'state', 'city', 'pincode', 'district',
       'aadharNumber', 'licenseNumber', 'date', 
     ]
-
 
     let errors = {}
 
@@ -517,7 +516,7 @@ export default function RegistrationForm() {
           Submit
         </button>
         {/* <p className="text-center text-gray-700 mt-2">
-          Upon successful registration, you will be redirected to the online payment screen to pay ₹430.
+          Upon successful registration, you will be redirected to the online payment screen to pay ₹885.
         </p> */}
         {status && <p className="mt-4 text-md font-medium text-red-600">{status}</p>}
       </form>
