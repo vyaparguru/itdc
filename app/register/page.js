@@ -1,10 +1,17 @@
 'use client'
-import { useRef, useState } from 'react'
+import { useRef, useState } from 'react';
+
+const PAYMENT_AMOUNT = 88500; 
 
 export default function RegistrationForm() {
+  const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
   const [showModal, setShowModal] = useState(false)
   const [uniqueId, setUniqueId] = useState('')
   const formRef = useRef(null)
+  const userNameRef = useRef('');
+  const userEmailRef = useRef('');
+  const formDataRef = useRef({});
 
   const [status, setStatus] = useState('')
   const [profilePhoto, setProfilePhoto] = useState(null)
@@ -16,40 +23,72 @@ export default function RegistrationForm() {
     licenseFront: '',
     licenseBack: '',
   })
-  const handlePayment = async() => {
-    if (!uniqueId) return
-    await loadRazorpayScript()
-  
-  const res = await fetch('/api/create-order', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      amount: 88500,
-      receipt: uniqueId,
-    }),
-  });
-  const data = await res.json();
-  if (!data.orderId) {
-    setStatus('Failed to initiate payment');
-    return;
+
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      if (!file) return resolve('');
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(',')[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
   }
-    const options = {
-    key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'rzp_live_CG5HThTQPJqpX4',
-    amount: 88500,
-    currency: 'INR',
-    name: 'Jal Driving Centre',
-    description: `Registration Payment (ID: ${uniqueId})`,
-    order_id: data.orderId, 
-    handler: function (response) {
-      window.location.href = `/payment-confirmation?uid=${uniqueId}`;
-    },
-    prefill: {},
-    notes: { uniqueId },
-    theme: { color: '#800000' },
+  const handlePayment = async () => {
+    if (!uniqueId) return;
+    await loadRazorpayScript();
+
+    try {
+      const res = await fetch('/api/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: PAYMENT_AMOUNT,
+          receipt: uniqueId,
+        }),
+      });
+      const data = await res.json();
+      if (!data.orderId) {
+        setStatus('Failed to initiate payment');
+        return;
+      }
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'rzp_live_CG5HThTQPJqpX4',
+        amount: PAYMENT_AMOUNT,
+        currency: 'INR',
+        name: 'Jal Driving Centre',
+        description: `Registration Payment (ID: ${uniqueId})`,
+        order_id: data.orderId,
+        handler: async function (response) {
+          const form = formRef.current;
+          const getFile = (name) => form.elements[name]?.files?.[0] || null;
+
+          const passportPhoto = await fileToBase64(getFile('passportPhoto'));
+          const aadharFront = await fileToBase64(getFile('aadharFront'));
+          const aadharBack = await fileToBase64(getFile('aadharBack'));
+          const licenseFront = await fileToBase64(getFile('licenseFront'));
+          const licenseBack = await fileToBase64(getFile('licenseBack'));
+
+          await fetch('/api/send-receipt', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              uniqueId,
+              ...formDataRef.current,
+            }),
+
+          });
+          window.location.href = `/payment-confirmation?uid=${uniqueId}`;
+        },
+        prefill: {},
+        notes: { uniqueId },
+        theme: { color: '#800000' },
+      };
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (err) {
+      setStatus('Payment initiation failed.');
+    }
   };
-  const rzp = new window.Razorpay(options);
-  rzp.open();
-};
 
   const loadRazorpayScript = () => {
     if (window.Razorpay) return Promise.resolve()
@@ -61,14 +100,6 @@ export default function RegistrationForm() {
     })
   }
 
-  const handleProfilePhotoChange = (e) => {
-    const file = e.target.files[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onload = () => setProfilePhoto(reader.result)
-      reader.readAsDataURL(file)
-    }
-  }
   const isValidJpg = (file) => {
     if (!file) return true
     const validTypes = ['image/jpeg', 'image/jpg']
@@ -107,7 +138,7 @@ export default function RegistrationForm() {
     const requiredFields = [
       'name', 'fathersName', 'dob', 'mobile', 'email', 'qualification',
       'passportPhoto', 'address', 'state', 'city', 'pincode', 'district',
-      'aadharNumber', 'licenseNumber', 'date', 
+      'aadharNumber', 'licenseNumber', 'date',
     ]
 
     let errors = {}
@@ -151,6 +182,10 @@ export default function RegistrationForm() {
       errors['email'] = 'Email must contain "@" and end with ".com"'
     }
 
+
+    userNameRef.current = name;
+    userEmailRef.current = email;
+
     const mobile = form.elements['mobile'].value.trim()
     if (mobile && !/^\d{10}$/.test(mobile)) {
       errors['mobile'] = 'Mobile number must be exactly 10 digits'
@@ -191,19 +226,57 @@ export default function RegistrationForm() {
       if (data.success && data.uniqueId) {
         setStatus('')
         setUniqueId(data.uniqueId)
-        setShowModal(true)
-        formRef.current.reset()
-        setProfilePhoto(null)
-        setFieldErrors({})
+
+        // Save all form data BEFORE resetting the form
+        const getFile = (name) => form.elements[name]?.files?.[0] || null;
+
+        const passportPhoto = await fileToBase64(getFile('passportPhoto'));
+        const aadharFront = await fileToBase64(getFile('aadharFront'));
+        const aadharBack = await fileToBase64(getFile('aadharBack'));
+        const licenseFront = await fileToBase64(getFile('licenseFront'));
+        const licenseBack = await fileToBase64(getFile('licenseBack'));
+
+        formDataRef.current = {
+          name: form.elements['name'].value.trim(),
+          fathersName: form.elements['fathersName'].value.trim(),
+          dob: form.elements['dob'].value.trim(),
+          mobile: form.elements['mobile'].value.trim(),
+          email: form.elements['email'].value.trim(),
+          qualification: form.elements['qualification'].value.trim(),
+          address: form.elements['address'].value.trim(),
+          state: form.elements['state'].value.trim(),
+          city: form.elements['city'].value.trim(),
+          pincode: form.elements['pincode'].value.trim(),
+          district: form.elements['district'].value.trim(),
+          aadharNumber: form.elements['aadharNumber'].value.trim(),
+          licenseNumber: form.elements['licenseNumber'].value.trim(),
+          licenseCategory: form.elements['licenseCategory'].value.trim(),
+          licenseIssueDate: form.elements['licenseIssueDate'].value.trim(),
+          licenseExpiryDate: form.elements['licenseExpiryDate'].value.trim(),
+          issuingAuthority: form.elements['issuingAuthority'].value.trim(),
+          date: form.elements['date'].value.trim(),
+          place: form.elements['place'].value.trim(),
+          passportPhoto,
+          aadharFront,
+          aadharBack,
+          licenseFront,
+          licenseBack,
+        };
+
+        setShowModal(true);
+        formRef.current.reset();
+        setProfilePhoto(null);
+        setFieldErrors({});
         setFileErrors({
           passportPhoto: '',
           aadharFront: '',
           aadharBack: '',
           licenseFront: '',
           licenseBack: '',
-        })
-        setStatus('Form submitted successfully!')
-      } else {
+        });
+        setStatus('Form submitted successfully!');
+      }
+      else {
         setStatus('Failed to submit form.')
       }
     } catch (err) {
@@ -215,29 +288,29 @@ export default function RegistrationForm() {
     <div className="max-w-screen bg-gray-100 flex items-center justify-center px-4 py-40">
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/30">
-          <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full text-center">
+          <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full text-center relative">
+            <button
+              className="absolute top-2 right-2 text-gray-800 text-2xl font-bold z-50"
+              onClick={() => setShowModal(false)}
+              aria-label="Close"
+              type="button"
+            >
+              &times;
+            </button>
             <h2 className="text-2xl font-bold mb-4 text-[#800000]">Kindly make payment for registration</h2>
             <p className="mb-2 text-gray-900">Application would be void without receipt of payment!</p>
             <p className="mb-4 font-semibold text-gray-900">Your Unique ID: <span className="text-blue-700">{uniqueId}</span></p>
             <button
               className="bg-[#800000] text-white px-4 py-2 rounded mb-2 w-full"
-              onClick={
-                handlePayment()
-              }
+              onClick={handlePayment}
             >
-              Make Payment (₹885)
+              Make Payment (₹{PAYMENT_AMOUNT / 100})
             </button>
-            {/* <button
-              className="mt-2 text-gray-600 underline"
-              onClick={() => setShowModal(false)}
-            >
-              Close
-            </button> */}
           </div>
         </div>
       )}
       <form
-      ref={formRef}
+        ref={formRef}
         onSubmit={handleSubmit}
         className="w-full max-w-5xl text-black bg-white p-8 shadow-md rounded"
         autoComplete="off"
@@ -276,7 +349,18 @@ export default function RegistrationForm() {
 
           <div>
             <label className="block text-gray-black font-semibold">Email<span className="text-red-600">*</span></label>
-            <input name="email" className="border border-gray-600 p-2 w-full" type="text" />
+            <input
+              name="email"
+              className="border border-gray-600 p-2 w-full"
+              type="text"
+              onChange={(e) => {
+                const value = e.target.value
+                  .replace(/\s/g, '')  
+                  .toLowerCase();      
+                e.target.value = value;
+              }}
+            />
+
             {fieldErrors.email && (
               <p className="text-red-600 text-sm mt-1">{fieldErrors.email}</p>
             )}
