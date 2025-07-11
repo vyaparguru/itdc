@@ -4,8 +4,6 @@ import { useRef, useState } from 'react';
 const PAYMENT_AMOUNT = 88500; 
 
 export default function RegistrationForm() {
-  const [userName, setUserName] = useState('');
-  const [userEmail, setUserEmail] = useState('');
   const [showModal, setShowModal] = useState(false)
   const [uniqueId, setUniqueId] = useState('')
   const formRef = useRef(null)
@@ -61,12 +59,6 @@ export default function RegistrationForm() {
         handler: async function (response) {
           const form = formRef.current;
           const getFile = (name) => form.elements[name]?.files?.[0] || null;
-
-          const passportPhoto = await fileToBase64(getFile('passportPhoto'));
-          const aadharFront = await fileToBase64(getFile('aadharFront'));
-          const aadharBack = await fileToBase64(getFile('aadharBack'));
-          const licenseFront = await fileToBase64(getFile('licenseFront'));
-          const licenseBack = await fileToBase64(getFile('licenseBack'));
 
           await fetch('/api/send-receipt', {
             method: 'POST',
@@ -227,7 +219,6 @@ export default function RegistrationForm() {
         setStatus('')
         setUniqueId(data.uniqueId)
 
-        // Save all form data BEFORE resetting the form
         const getFile = (name) => form.elements[name]?.files?.[0] || null;
 
         const passportPhoto = await fileToBase64(getFile('passportPhoto'));

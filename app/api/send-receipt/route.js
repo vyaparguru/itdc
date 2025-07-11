@@ -78,8 +78,6 @@ export async function POST(req) {
               <p><strong>Received from:</strong> ${data.name}</p>
               <p>
                 <strong>Amount:</strong> ₹ 885/- (Rupees Eight hundred & eighty five only)
-                <br />
-                <em>(Inclusive of GST)</em>
               </p>
               <p><strong>Payment Mode:</strong> Online</p>
               <p><strong>Towards:</strong> Refresher Course</p>
@@ -89,7 +87,17 @@ export async function POST(req) {
                 📝 <strong>Note:</strong> Please retain this receipt for future reference.
               </div>
               <div style="text-align: center;">
-                <a href="tel:9056066473" class="btn-call">📞 Call for Slot Booking</a>
+                <a href="tel:9056066473" class="btn-call">
+  <svg xmlns="http://www.w3.org/2000/svg" 
+       width="16" height="16" 
+       fill="green" 
+       viewBox="0 0 24 24" 
+       style="vertical-align: middle; margin-right: 4px;">
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.91 19.91 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.91 19.91 0 0 1 2.1 4.18 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72c.2 1.38.71 2.71 1.5 3.88a2 2 0 0 1-.45 2.57l-1.27 1a16 16 0 0 0 6 6l1-1.27a2 2 0 0 1 2.57-.45c1.17.79 2.5 1.3 3.88 1.5A2 2 0 0 1 22 16.92z"/>
+  </svg>
+  <span style="color: white;">Call for Slot Booking</span>
+</a>
+
               </div>
             </div>
             <div class="footer">
