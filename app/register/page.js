@@ -1,4 +1,5 @@
 'use client'
+import LoaderOverlay from '@/components/LoaderOverlay';
 import { useRef, useState } from 'react';
 
 const PAYMENT_AMOUNT = 88500; 
@@ -14,6 +15,8 @@ export default function RegistrationForm() {
   const [status, setStatus] = useState('')
   const [profilePhoto, setProfilePhoto] = useState(null)
   const [fieldErrors, setFieldErrors] = useState({})
+  const [loading, setLoading] = useState(false);
+
   const [fileErrors, setFileErrors] = useState({
     passportPhoto: '',
     aadharFront: '',
@@ -32,6 +35,7 @@ export default function RegistrationForm() {
     });
   }
   const handlePayment = async () => {
+    setLoading(true);
     if (!uniqueId) return;
     await loadRazorpayScript();
 
@@ -57,8 +61,9 @@ export default function RegistrationForm() {
         description: `Registration Payment (ID: ${uniqueId})`,
         order_id: data.orderId,
         handler: async function (response) {
-          const form = formRef.current;
-          const getFile = (name) => form.elements[name]?.files?.[0] || null;
+          setLoading(true);
+          // const form = formRef.current;
+          // const getFile = (name) => form.elements[name]?.files?.[0] || null;
 
           await fetch('/api/send-receipt', {
             method: 'POST',
@@ -69,16 +74,25 @@ export default function RegistrationForm() {
             }),
 
           });
-          window.location.href = `/payment-confirmation?uid=${uniqueId}`;
+          setTimeout(() => {
+    window.location.href = `/payment-confirmation?uid=${uniqueId}`;
+  }, 500);
         },
         prefill: {},
         notes: { uniqueId },
         theme: { color: '#800000' },
+        modal: {
+    ondismiss: function () {
+      setLoading(false); // 👈 turn off loader if modal closed
+      setStatus('Payment was cancelled by the user.');
+    }
+  }
       };
       const rzp = new window.Razorpay(options);
       rzp.open();
     } catch (err) {
       setStatus('Payment initiation failed.');
+      setLoading(false);
     }
   };
 
@@ -122,7 +136,7 @@ export default function RegistrationForm() {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     setStatus('')
     setFieldErrors({})
 
@@ -209,6 +223,7 @@ export default function RegistrationForm() {
     const formData = new FormData(form)
 
     try {
+      setLoading(true);
       const res = await fetch('/api/register', {
         method: 'POST',
         body: formData,
@@ -270,15 +285,20 @@ export default function RegistrationForm() {
       else {
         setStatus('Failed to submit form.')
       }
+      setLoading(false);
     } catch (err) {
-      setStatus('Server error.')
+      setStatus('Server error.');
+      setLoading(false);
     }
   }
 
   return (
+    <>
+    {loading && <LoaderOverlay />}
+
     <div className="max-w-screen bg-gray-100 flex items-center justify-center px-4 py-40">
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/30">
+        <div className="fixed inset-0 z-10 flex items-center justify-center backdrop-blur-sm bg-black/30">
           <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full text-center relative">
             <button
               className="absolute top-2 right-2 text-gray-800 text-2xl font-bold z-50"
@@ -292,7 +312,7 @@ export default function RegistrationForm() {
             <p className="mb-2 text-gray-900">Application would be void without receipt of payment!</p>
             <p className="mb-4 font-semibold text-gray-900">Your Unique ID: <span className="text-blue-700">{uniqueId}</span></p>
             <button
-              className="bg-[#800000] text-white px-4 py-2 rounded mb-2 w-full"
+              className="bg-[#800000] text-white px-4 py-2 rounded mb-2 w-full z-10"
               onClick={handlePayment}
             >
               Make Payment (₹{PAYMENT_AMOUNT / 100})
@@ -596,5 +616,6 @@ export default function RegistrationForm() {
         {status && <p className="mt-4 text-md font-medium text-red-600">{status}</p>}
       </form>
     </div>
+    </>
   )
 }

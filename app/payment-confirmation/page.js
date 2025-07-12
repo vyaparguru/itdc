@@ -1,6 +1,7 @@
 'use client'
 import { Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
+import LoaderOverlay from '@/components/LoaderOverlay'
 
 function PaymentConfirmationInner() {
   const params = useSearchParams()
@@ -19,8 +20,9 @@ function PaymentConfirmationInner() {
 
 export default function PaymentConfirmation() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <PaymentConfirmationInner />
-    </Suspense>
+    <Suspense fallback={<LoaderOverlay />}>
+  <PaymentConfirmationInner />
+</Suspense>
+
   )
 }

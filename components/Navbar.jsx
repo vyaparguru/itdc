@@ -21,7 +21,7 @@ const Navbar = () => {
   const isActive = (path) => pathname === path ? "border-b-2 border-[#800000]" : ""; 
 
   return (
-    <nav className="bg-white text-gray-800 py-4 shadow-md fixed top-0 left-0 w-full z-40">
+    <nav className="bg-white text-gray-800 py-4 shadow-md fixed top-0 left-0 w-full z-10">
       <div className="flex justify-between items-center max-w-6xl mx-auto px-4 md:px-0">
         <div className="flex items-center">
           <Link href="/" className="text-xl font-bold">
