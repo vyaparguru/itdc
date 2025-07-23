@@ -119,21 +119,27 @@ export default function RegistrationForm() {
   }
 
   const handleFileChange = (e) => {
-    const { name, files } = e.target
-    let error = ''
-    if (files && files[0] && !isValidJpg(files[0])) {
-      error = 'Only JPG/JPEG files are allowed'
-    }
-    setFileErrors((prev) => ({ ...prev, [name]: error }))
-
-    if (name === 'passportPhoto' && files && files[0] && !error) {
-      const reader = new FileReader()
-      reader.onload = () => setProfilePhoto(reader.result)
-      reader.readAsDataURL(files[0])
-    } else if (name === 'passportPhoto' && (!files || !files[0] || error)) {
-      setProfilePhoto(null)
-    }
+  const { name, files } = e.target;
+  let error = '';
+  if (files && files[0] && !isValidJpg(files[0])) {
+    error = 'Only JPG/JPEG files are allowed';
   }
+
+  if (!error && files && files[0] && files[0].size > 1 * 1024 * 1024) {
+    error = 'File size must be under 1MB';
+  }
+
+  setFileErrors((prev) => ({ ...prev, [name]: error }));
+
+  if (name === 'passportPhoto' && files && files[0] && !error) {
+    const reader = new FileReader();
+    reader.onload = () => setProfilePhoto(reader.result);
+    reader.readAsDataURL(files[0]);
+  } else if (name === 'passportPhoto' && (!files || !files[0] || error)) {
+    setProfilePhoto(null);
+  }
+};
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
