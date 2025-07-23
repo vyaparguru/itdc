@@ -2,7 +2,7 @@
 import LoaderOverlay from '@/components/LoaderOverlay';
 import { useRef, useState } from 'react';
 
-const PAYMENT_AMOUNT = 88500; 
+const PAYMENT_AMOUNT = 88500;
 
 export default function RegistrationForm() {
   const [showModal, setShowModal] = useState(false)
@@ -75,18 +75,18 @@ export default function RegistrationForm() {
 
           });
           setTimeout(() => {
-    window.location.href = `/payment-confirmation?uid=${uniqueId}`;
-  }, 500);
+            window.location.href = `/payment-confirmation?uid=${uniqueId}`;
+          }, 500);
         },
         prefill: {},
         notes: { uniqueId },
         theme: { color: '#800000' },
         modal: {
-    ondismiss: function () {
-      setLoading(false); // 👈 turn off loader if modal closed
-      setStatus('Payment was cancelled by the user.');
-    }
-  }
+          ondismiss: function () {
+            setLoading(false); // 👈 turn off loader if modal closed
+            setStatus('Payment was cancelled by the user.');
+          }
+        }
       };
       const rzp = new window.Razorpay(options);
       rzp.open();
@@ -119,32 +119,34 @@ export default function RegistrationForm() {
   }
 
   const handleFileChange = (e) => {
-  const { name, files } = e.target;
-  let error = '';
-  if (files && files[0] && !isValidJpg(files[0])) {
-    error = 'Only JPG/JPEG files are allowed';
-  }
+    const { name, files } = e.target;
+    let error = '';
+    if (files && files[0] && !isValidJpg(files[0])) {
+      error = 'Only JPG/JPEG files are allowed';
+    }
 
-  if (!error && files && files[0] && files[0].size > 1 * 1024 * 1024) {
-    error = 'File size must be under 1MB';
-  }
+    if (!error && files && files[0] && files[0].size > 1 * 1024 * 1024) {
+      error = 'File size must be under 1MB';
+    }
 
-  setFileErrors((prev) => ({ ...prev, [name]: error }));
+    setFileErrors((prev) => ({ ...prev, [name]: error }));
 
-  if (name === 'passportPhoto' && files && files[0] && !error) {
-    const reader = new FileReader();
-    reader.onload = () => setProfilePhoto(reader.result);
-    reader.readAsDataURL(files[0]);
-  } else if (name === 'passportPhoto' && (!files || !files[0] || error)) {
-    setProfilePhoto(null);
-  }
-};
+    if (name === 'passportPhoto' && files && files[0] && !error) {
+      const reader = new FileReader();
+      reader.onload = () => setProfilePhoto(reader.result);
+      reader.readAsDataURL(files[0]);
+    } else if (name === 'passportPhoto' && (!files || !files[0] || error)) {
+      setProfilePhoto(null);
+    }
+  };
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('')
     setFieldErrors({})
+
+    const hasFileError = Object.values(fileErrors).some(err => err);
 
     const form = e.target
     const requiredFields = [
@@ -224,6 +226,10 @@ export default function RegistrationForm() {
       }
       return
     }
+    if (hasFileError) {
+      setStatus('Please fix file upload errors before submitting');
+      return;
+    }
 
     setStatus('Submitting...')
     const formData = new FormData(form)
@@ -300,328 +306,328 @@ export default function RegistrationForm() {
 
   return (
     <>
-    {loading && <LoaderOverlay />}
+      {loading && <LoaderOverlay />}
 
-    <div className="max-w-screen bg-gray-100 flex items-center justify-center px-4 py-40">
-      {showModal && (
-        <div className="fixed inset-0 z-10 flex items-center justify-center backdrop-blur-sm bg-black/30">
-          <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full text-center relative">
-            <button
-              className="absolute top-2 right-2 text-gray-800 text-2xl font-bold z-50"
-              onClick={() => setShowModal(false)}
-              aria-label="Close"
-              type="button"
-            >
-              &times;
-            </button>
-            <h2 className="text-2xl font-bold mb-4 text-[#800000]">Kindly make payment for registration</h2>
-            <p className="mb-2 text-gray-900">Application would be void without receipt of payment!</p>
-            <p className="mb-4 font-semibold text-gray-900">Your Unique ID: <span className="text-blue-700">{uniqueId}</span></p>
-            <button
-              className="bg-[#800000] text-white px-4 py-2 rounded mb-2 w-full z-10"
-              onClick={handlePayment}
-            >
-              Make Payment (₹{PAYMENT_AMOUNT / 100})
-            </button>
+      <div className="max-w-screen bg-gray-100 flex items-center justify-center px-4 py-40">
+        {showModal && (
+          <div className="fixed inset-0 z-10 flex items-center justify-center backdrop-blur-sm bg-black/30">
+            <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full text-center relative">
+              <button
+                className="absolute top-2 right-2 text-gray-800 text-2xl font-bold z-50"
+                onClick={() => setShowModal(false)}
+                aria-label="Close"
+                type="button"
+              >
+                &times;
+              </button>
+              <h2 className="text-2xl font-bold mb-4 text-[#800000]">Kindly make payment for registration</h2>
+              <p className="mb-2 text-gray-900">Application would be void without receipt of payment!</p>
+              <p className="mb-4 font-semibold text-gray-900">Your Unique ID: <span className="text-blue-700">{uniqueId}</span></p>
+              <button
+                className="bg-[#800000] text-white px-4 py-2 rounded mb-2 w-full z-10"
+                onClick={handlePayment}
+              >
+                Make Payment (₹{PAYMENT_AMOUNT / 100})
+              </button>
+            </div>
           </div>
-        </div>
-      )}
-      <form
-        ref={formRef}
-        onSubmit={handleSubmit}
-        className="w-full max-w-5xl text-black bg-white p-8 shadow-md rounded"
-        autoComplete="off"
-      >
-        <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 leading-snug mb-5"><span className='text-[#800000]'>Registration</span> <span>Form</span></h2>
+        )}
+        <form
+          ref={formRef}
+          onSubmit={handleSubmit}
+          className="w-full max-w-5xl text-black bg-white p-8 shadow-md rounded"
+          autoComplete="off"
+        >
+          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 leading-snug mb-5"><span className='text-[#800000]'>Registration</span> <span>Form</span></h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-gray-black font-semibold">Name<span className="text-red-600">*</span></label>
-            <input name="name" className="border border-gray-600 p-2 w-full" type="text" />
-            {fieldErrors.name && (
-              <p className="text-red-600 text-sm mt-1">{fieldErrors.name}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-gray-black font-semibold">Father's Name<span className="text-red-600">*</span></label>
-            <input name="fathersName" className="border border-gray-600 p-2 w-full" type="text" />
-            {fieldErrors.fathersName && (
-              <p className="text-red-600 text-sm mt-1">{fieldErrors.fathersName}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-gray-black font-semibold">Date of Birth<span className="text-red-600">*</span></label>
-            <input name="dob" className="border border-gray-600 p-2 w-full" type="date" />
-          </div>
-
-          <div>
-            <label className="block text-gray-black font-semibold">Mobile No.<span className="text-red-600">*</span></label>
-            <input name="mobile" className="border border-gray-600 p-2 w-full" type="text" />
-            {fieldErrors.mobile && (
-              <p className="text-red-600 text-sm mt-1">{fieldErrors.mobile}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-gray-black font-semibold">Email<span className="text-red-600">*</span></label>
-            <input
-              name="email"
-              className="border border-gray-600 p-2 w-full"
-              type="text"
-              onChange={(e) => {
-                const value = e.target.value
-                  .replace(/\s/g, '')  
-                  .toLowerCase();      
-                e.target.value = value;
-              }}
-            />
-
-            {fieldErrors.email && (
-              <p className="text-red-600 text-sm mt-1">{fieldErrors.email}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-gray-black font-semibold">Qualification<span className="text-red-600">*</span></label>
-            <select name="qualification" className="border border-gray-600 p-2 w-full">
-              <option value="">Select</option>
-              <option>5th standard</option>
-              <option>8th standard</option>
-              <option>10th standard</option>
-              <option>12th standard</option>
-              <option>Graduate</option>
-              <option>Others</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-gray-black font-semibold">Passport Size Photo<span className="text-red-600">*</span></label>
-            <input
-              type="file"
-              name="passportPhoto"
-              accept=".jpg,.jpeg,image/jpeg"
-              onChange={handleFileChange}
-              className="border border-gray-600 p-2 w-full"
-            />
-            {fileErrors.passportPhoto && (
-              <p className="text-red-600 text-sm mt-1">{fileErrors.passportPhoto}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-gray-black font-semibold">Profile Photo Preview</label>
-            <div className="border border-gray-600 p-2 w-full h-32 flex items-center justify-center">
-              {profilePhoto ? (
-                <img src={profilePhoto} alt="Profile Preview" className="h-full" />
-              ) : (
-                <span>No photo uploaded</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-gray-black font-semibold">Name<span className="text-red-600">*</span></label>
+              <input name="name" className="border border-gray-600 p-2 w-full" type="text" />
+              {fieldErrors.name && (
+                <p className="text-red-600 text-sm mt-1">{fieldErrors.name}</p>
               )}
+            </div>
+
+            <div>
+              <label className="block text-gray-black font-semibold">Father's Name<span className="text-red-600">*</span></label>
+              <input name="fathersName" className="border border-gray-600 p-2 w-full" type="text" />
+              {fieldErrors.fathersName && (
+                <p className="text-red-600 text-sm mt-1">{fieldErrors.fathersName}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-gray-black font-semibold">Date of Birth<span className="text-red-600">*</span></label>
+              <input name="dob" className="border border-gray-600 p-2 w-full" type="date" />
+            </div>
+
+            <div>
+              <label className="block text-gray-black font-semibold">Mobile No.<span className="text-red-600">*</span></label>
+              <input name="mobile" className="border border-gray-600 p-2 w-full" type="text" />
+              {fieldErrors.mobile && (
+                <p className="text-red-600 text-sm mt-1">{fieldErrors.mobile}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-gray-black font-semibold">Email<span className="text-red-600">*</span></label>
+              <input
+                name="email"
+                className="border border-gray-600 p-2 w-full"
+                type="text"
+                onChange={(e) => {
+                  const value = e.target.value
+                    .replace(/\s/g, '')
+                    .toLowerCase();
+                  e.target.value = value;
+                }}
+              />
+
+              {fieldErrors.email && (
+                <p className="text-red-600 text-sm mt-1">{fieldErrors.email}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-gray-black font-semibold">Qualification<span className="text-red-600">*</span></label>
+              <select name="qualification" className="border border-gray-600 p-2 w-full">
+                <option value="">Select</option>
+                <option>5th standard</option>
+                <option>8th standard</option>
+                <option>10th standard</option>
+                <option>12th standard</option>
+                <option>Graduate</option>
+                <option>Others</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-gray-black font-semibold">Passport Size Photo<span className="text-red-600">*</span></label>
+              <input
+                type="file"
+                name="passportPhoto"
+                accept=".jpg,.jpeg,image/jpeg"
+                onChange={handleFileChange}
+                className="border border-gray-600 p-2 w-full"
+              />
+              {fileErrors.passportPhoto && (
+                <p className="text-red-600 text-sm mt-1">{fileErrors.passportPhoto}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-gray-black font-semibold">Profile Photo Preview</label>
+              <div className="border border-gray-600 p-2 w-full h-32 flex items-center justify-center">
+                {profilePhoto ? (
+                  <img src={profilePhoto} alt="Profile Preview" className="h-full" />
+                ) : (
+                  <span>No photo uploaded</span>
+                )}
+              </div>
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="block text-gray-black font-semibold">Address<span className="text-red-600">*</span></label>
+              <input name="address" className="border border-gray-600 p-2 w-full" type="text" />
+            </div>
+
+            <div>
+              <label className="block text-gray-black font-semibold">State<span className="text-red-600">*</span></label>
+              <select name="state" className="border border-gray-600 p-2 w-full">
+                <option value="">Select</option>
+                <option>Andaman and Nicobar Islands</option>
+                <option>Andhra Pradesh</option>
+                <option>Arunachal Pradesh</option>
+                <option>Assam</option>
+                <option>Bihar</option>
+                <option>Chandigarh</option>
+                <option>Chhattisgarh</option>
+                <option>Dadra and Nagar Haveli and Daman and Diu</option>
+                <option>Delhi</option>
+                <option>Goa</option>
+                <option>Gujarat</option>
+                <option>Haryana</option>
+                <option>Himachal Pradesh</option>
+                <option>Jammu and Kashmir</option>
+                <option>Jharkhand</option>
+                <option>Karnataka</option>
+                <option>Kerala</option>
+                <option>Ladakh</option>
+                <option>Lakshadweep</option>
+                <option>Madhya Pradesh</option>
+                <option>Maharashtra</option>
+                <option>Manipur</option>
+                <option>Meghalaya</option>
+                <option>Mizoram</option>
+                <option>Nagaland</option>
+                <option>Odisha</option>
+                <option>Puducherry</option>
+                <option>Punjab</option>
+                <option>Rajasthan</option>
+                <option>Sikkim</option>
+                <option>Tamil Nadu</option>
+                <option>Telangana</option>
+                <option>Tripura</option>
+                <option>Uttar Pradesh</option>
+                <option>Uttarakhand</option>
+                <option>West Bengal</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-gray-black font-semibold">City<span className="text-red-600">*</span></label>
+              <input name="city" className="border border-gray-600 p-2 w-full" type="text" />
+            </div>
+
+            <div>
+              <label className="block text-gray-black font-semibold">Pincode<span className="text-red-600">*</span></label>
+              <input name="pincode" className="border border-gray-600 p-2 w-full" type="text" />
+              {fieldErrors.pincode && (
+                <p className="text-red-600 text-sm mt-1">{fieldErrors.pincode}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-gray-black font-semibold">District<span className="text-red-600">*</span></label>
+              <input name="district" className="border border-gray-600 p-2 w-full" type="text" />
+            </div>
+
+            <div>
+              <label className="block text-gray-black font-semibold">Aadhar Card Number<span className="text-red-600">*</span></label>
+              <input name="aadharNumber" className="border border-gray-600 p-2 w-full" type="text" />
+              {fieldErrors.aadharNumber && (
+                <p className="text-red-600 text-sm mt-1">{fieldErrors.aadharNumber}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-gray-black font-semibold">Aadhar Front Side</label>
+              <input
+                type="file"
+                name="aadharFront"
+                accept=".jpg,.jpeg,image/jpeg"
+                onChange={handleFileChange}
+                className="border border-gray-600 p-2 w-full"
+              />
+              {fileErrors.aadharFront && (
+                <p className="text-red-600 text-sm mt-1">{fileErrors.aadharFront}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-gray-black font-semibold">Aadhar Back Side</label>
+              <input
+                type="file"
+                name="aadharBack"
+                accept=".jpg,.jpeg,image/jpeg"
+                onChange={handleFileChange}
+                className="border border-gray-600 p-2 w-full"
+              />
+              {fileErrors.aadharBack && (
+                <p className="text-red-600 text-sm mt-1">{fileErrors.aadharBack}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-gray-black font-semibold">Driving License Number<span className="text-red-600">*</span></label>
+              <input name="licenseNumber" className="border border-gray-600 p-2 w-full" type="text" />
+            </div>
+
+            <div>
+              <label className="block text-gray-black font-semibold">License Category</label>
+              <select name="licenseCategory" className="border border-gray-600 p-2 w-full">
+                <option value="">Select</option>
+                <option>LMV</option>
+                <option>HMV</option>
+                <option>LTV</option>
+                <option>HTV</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-gray-black font-semibold">License Issue Date</label>
+              <input name="licenseIssueDate" className="border border-gray-600 p-2 w-full" type="date" />
+            </div>
+            <div>
+              <label className="block text-gray-black font-semibold">License Expiry Date</label>
+              <input name="licenseExpiryDate" className="border border-gray-600 p-2 w-full" type="date" />
+            </div>
+
+            <div>
+              <label className="block text-gray-black font-semibold">Issuing Authority</label>
+              <select name="issuingAuthority" className="border border-gray-600 p-2 w-full">
+                <option value="">Select</option>
+                <option>RTO</option>
+                <option>DTO</option>
+                <option>SDM</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-gray-black font-semibold">Driving License Front Side</label>
+              <input
+                type="file"
+                name="licenseFront"
+                accept=".jpg,.jpeg,image/jpeg"
+                onChange={handleFileChange}
+                className="border border-gray-600 p-2 w-full"
+              />
+              {fileErrors.licenseFront && (
+                <p className="text-red-600 text-sm mt-1">{fileErrors.licenseFront}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-gray-black font-semibold">Driving License Back Side</label>
+              <input
+                type="file"
+                name="licenseBack"
+                accept=".jpg,.jpeg,image/jpeg"
+                onChange={handleFileChange}
+                className="border border-gray-600 p-2 w-full"
+              />
+              {fileErrors.licenseBack && (
+                <p className="text-red-600 text-sm mt-1">{fileErrors.licenseBack}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-gray-black font-semibold">Date</label>
+              <input
+                name="date"
+                className="border border-gray-600 p-2 w-full"
+                type="text"
+                defaultValue={
+                  (() => {
+                    const d = new Date()
+                    const day = String(d.getDate()).padStart(2, '0')
+                    const month = String(d.getMonth() + 1).padStart(2, '0')
+                    const year = d.getFullYear()
+                    return `${day}-${month}-${year}`
+                  })()
+                }
+              />
+            </div>
+
+            <div>
+              <label className="block text-gray-black font-semibold">Place</label>
+              <input name="place" className="border border-gray-600 p-2 w-full" type="text" />
             </div>
           </div>
 
-          <div className="md:col-span-2">
-            <label className="block text-gray-black font-semibold">Address<span className="text-red-600">*</span></label>
-            <input name="address" className="border border-gray-600 p-2 w-full" type="text" />
-          </div>
-
-          <div>
-            <label className="block text-gray-black font-semibold">State<span className="text-red-600">*</span></label>
-            <select name="state" className="border border-gray-600 p-2 w-full">
-              <option value="">Select</option>
-              <option>Andaman and Nicobar Islands</option>
-              <option>Andhra Pradesh</option>
-              <option>Arunachal Pradesh</option>
-              <option>Assam</option>
-              <option>Bihar</option>
-              <option>Chandigarh</option>
-              <option>Chhattisgarh</option>
-              <option>Dadra and Nagar Haveli and Daman and Diu</option>
-              <option>Delhi</option>
-              <option>Goa</option>
-              <option>Gujarat</option>
-              <option>Haryana</option>
-              <option>Himachal Pradesh</option>
-              <option>Jammu and Kashmir</option>
-              <option>Jharkhand</option>
-              <option>Karnataka</option>
-              <option>Kerala</option>
-              <option>Ladakh</option>
-              <option>Lakshadweep</option>
-              <option>Madhya Pradesh</option>
-              <option>Maharashtra</option>
-              <option>Manipur</option>
-              <option>Meghalaya</option>
-              <option>Mizoram</option>
-              <option>Nagaland</option>
-              <option>Odisha</option>
-              <option>Puducherry</option>
-              <option>Punjab</option>
-              <option>Rajasthan</option>
-              <option>Sikkim</option>
-              <option>Tamil Nadu</option>
-              <option>Telangana</option>
-              <option>Tripura</option>
-              <option>Uttar Pradesh</option>
-              <option>Uttarakhand</option>
-              <option>West Bengal</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-gray-black font-semibold">City<span className="text-red-600">*</span></label>
-            <input name="city" className="border border-gray-600 p-2 w-full" type="text" />
-          </div>
-
-          <div>
-            <label className="block text-gray-black font-semibold">Pincode<span className="text-red-600">*</span></label>
-            <input name="pincode" className="border border-gray-600 p-2 w-full" type="text" />
-            {fieldErrors.pincode && (
-              <p className="text-red-600 text-sm mt-1">{fieldErrors.pincode}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-gray-black font-semibold">District<span className="text-red-600">*</span></label>
-            <input name="district" className="border border-gray-600 p-2 w-full" type="text" />
-          </div>
-
-          <div>
-            <label className="block text-gray-black font-semibold">Aadhar Card Number<span className="text-red-600">*</span></label>
-            <input name="aadharNumber" className="border border-gray-600 p-2 w-full" type="text" />
-            {fieldErrors.aadharNumber && (
-              <p className="text-red-600 text-sm mt-1">{fieldErrors.aadharNumber}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-gray-black font-semibold">Aadhar Front Side</label>
-            <input
-              type="file"
-              name="aadharFront"
-              accept=".jpg,.jpeg,image/jpeg"
-              onChange={handleFileChange}
-              className="border border-gray-600 p-2 w-full"
-            />
-            {fileErrors.aadharFront && (
-              <p className="text-red-600 text-sm mt-1">{fileErrors.aadharFront}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-gray-black font-semibold">Aadhar Back Side</label>
-            <input
-              type="file"
-              name="aadharBack"
-              accept=".jpg,.jpeg,image/jpeg"
-              onChange={handleFileChange}
-              className="border border-gray-600 p-2 w-full"
-            />
-            {fileErrors.aadharBack && (
-              <p className="text-red-600 text-sm mt-1">{fileErrors.aadharBack}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-gray-black font-semibold">Driving License Number<span className="text-red-600">*</span></label>
-            <input name="licenseNumber" className="border border-gray-600 p-2 w-full" type="text" />
-          </div>
-
-          <div>
-            <label className="block text-gray-black font-semibold">License Category</label>
-            <select name="licenseCategory" className="border border-gray-600 p-2 w-full">
-              <option value="">Select</option>
-              <option>LMV</option>
-              <option>HMV</option>
-              <option>LTV</option>
-              <option>HTV</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-gray-black font-semibold">License Issue Date</label>
-            <input name="licenseIssueDate" className="border border-gray-600 p-2 w-full" type="date" />
-          </div>
-          <div>
-            <label className="block text-gray-black font-semibold">License Expiry Date</label>
-            <input name="licenseExpiryDate" className="border border-gray-600 p-2 w-full" type="date" />
-          </div>
-
-          <div>
-            <label className="block text-gray-black font-semibold">Issuing Authority</label>
-            <select name="issuingAuthority" className="border border-gray-600 p-2 w-full">
-              <option value="">Select</option>
-              <option>RTO</option>
-              <option>DTO</option>
-              <option>SDM</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-gray-black font-semibold">Driving License Front Side</label>
-            <input
-              type="file"
-              name="licenseFront"
-              accept=".jpg,.jpeg,image/jpeg"
-              onChange={handleFileChange}
-              className="border border-gray-600 p-2 w-full"
-            />
-            {fileErrors.licenseFront && (
-              <p className="text-red-600 text-sm mt-1">{fileErrors.licenseFront}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-gray-black font-semibold">Driving License Back Side</label>
-            <input
-              type="file"
-              name="licenseBack"
-              accept=".jpg,.jpeg,image/jpeg"
-              onChange={handleFileChange}
-              className="border border-gray-600 p-2 w-full"
-            />
-            {fileErrors.licenseBack && (
-              <p className="text-red-600 text-sm mt-1">{fileErrors.licenseBack}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-gray-black font-semibold">Date</label>
-            <input
-              name="date"
-              className="border border-gray-600 p-2 w-full"
-              type="text"
-              defaultValue={
-                (() => {
-                  const d = new Date()
-                  const day = String(d.getDate()).padStart(2, '0')
-                  const month = String(d.getMonth() + 1).padStart(2, '0')
-                  const year = d.getFullYear()
-                  return `${day}-${month}-${year}`
-                })()
-              }
-            />
-          </div>
-
-          <div>
-            <label className="block text-gray-black font-semibold">Place</label>
-            <input name="place" className="border border-gray-600 p-2 w-full" type="text" />
-          </div>
-        </div>
-
-        <button
-          type="submit"
-          className="mt-6 bg-[#800000] cursor-pointer text-white px-4 py-2 rounded flex mx-auto"
-        >
-          Submit
-        </button>
-        {/* <p className="text-center text-gray-700 mt-2">
+          <button
+            type="submit"
+            className="mt-6 bg-[#800000] cursor-pointer text-white px-4 py-2 rounded flex mx-auto"
+          >
+            Submit
+          </button>
+          {/* <p className="text-center text-gray-700 mt-2">
           Upon successful registration, you will be redirected to the online payment screen to pay ₹885.
         </p> */}
-        {status && <p className="mt-4 text-md font-medium text-red-600">{status}</p>}
-      </form>
-    </div>
+          {status && <p className="mt-4 text-md font-medium text-red-600">{status}</p>}
+        </form>
+      </div>
     </>
   )
 }
