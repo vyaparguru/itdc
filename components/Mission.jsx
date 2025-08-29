@@ -38,7 +38,6 @@ const Mission = () => {
                             src={image6}
                             alt="Mission Image 6"
                             className="w-96 h-68 md:h-[400px] object-cover shadow-xl rounded-lg"
-                            style={{ zIndex: 10 }}
                         />
 
                     </div>
