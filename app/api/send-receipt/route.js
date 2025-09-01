@@ -39,7 +39,7 @@ export async function POST(req) {
 
     console.log('Data in send-receipt:', data);
 
-    const maxBinarySize = 1_000_000; // 1MB
+    const maxBinarySize = 1_000_000; 
 ['passportPhoto', 'aadharFront', 'aadharBack', 'licenseFront', 'licenseBack'].forEach(field => {
   if (data[field]) {
     const binarySize = Math.floor((data[field].length * 3) / 4);
