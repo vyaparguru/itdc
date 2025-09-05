@@ -83,7 +83,7 @@ export default function RegistrationForm() {
         theme: { color: '#800000' },
         modal: {
           ondismiss: function () {
-            setLoading(false); // 👈 turn off loader if modal closed
+            setLoading(false); 
             setStatus('Payment was cancelled by the user.');
           }
         }
@@ -324,7 +324,7 @@ export default function RegistrationForm() {
               <p className="mb-2 text-gray-900">Application would be void without receipt of payment!</p>
               <p className="mb-4 font-semibold text-gray-900">Your Unique ID: <span className="text-blue-700">{uniqueId}</span></p>
               <button
-                className="bg-[#800000] text-white px-4 py-2 rounded mb-2 w-full z-10"
+                className="bg-[#800000] text-white px-4 py-2 rounded mb-2 w-full z-10 cursor-pointer"
                 onClick={handlePayment}
               >
                 Make Payment (₹{PAYMENT_AMOUNT / 100})
