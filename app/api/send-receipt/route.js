@@ -49,7 +49,6 @@ export async function POST(req) {
   }
 });
 
-
     const html = `
       <!DOCTYPE html>
       <html>
